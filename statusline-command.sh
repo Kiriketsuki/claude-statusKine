@@ -72,6 +72,36 @@ compute_delta() {
   fi
 }
 
+# --- gradient_text: Chrysaki Jewel gradient ---
+# Interpolates Emerald Lt (#1a8a6a) -> Royal Blue Lt (#1c3d7a) -> Amethyst Lt (#583090)
+# across each character. Caller must reset (\033[0m) when done.
+gradient_text() {
+  local text="$1"
+  local len="${#text}"
+  [ "$len" -eq 0 ] && return
+  local r1=26  g1=138 b1=106   # #1a8a6a Emerald Lt
+  local r2=28  g2=61  b2=122   # #1c3d7a Royal Blue Lt
+  local r3=88  g3=48  b3=144   # #583090 Amethyst Lt
+  local span=$(( len > 1 ? len - 1 : 1 ))
+  local i=0 t s r g b
+  while [ "$i" -lt "$len" ]; do
+    t=$(( i * 100 / span ))
+    if [ "$t" -le 50 ]; then
+      s=$(( t * 2 ))
+      r=$(( r1 + (r2 - r1) * s / 100 ))
+      g=$(( g1 + (g2 - g1) * s / 100 ))
+      b=$(( b1 + (b2 - b1) * s / 100 ))
+    else
+      s=$(( (t - 50) * 2 ))
+      r=$(( r2 + (r3 - r2) * s / 100 ))
+      g=$(( g2 + (g3 - g2) * s / 100 ))
+      b=$(( b2 + (b3 - b2) * s / 100 ))
+    fi
+    printf "\033[38;2;%d;%d;%dm%s" "$r" "$g" "$b" "${text:$i:1}"
+    i=$(( i + 1 ))
+  done
+}
+
 # --- context window ---
 used=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 ctx_str=""
@@ -143,13 +173,13 @@ fi
 SEP="${C_MUTED} • ${R}"
 PIPE="${C_MUTED} | ${R}"
 
-# line 1: model | folder • branch ↑N
-printf "${C_ORANGE}${BOLD}%s${NOBOLD}${R}" "$model"
+# line 1: model | folder • branch ↑N  (Chrysaki Jewel gradient)
+printf "${BOLD}"; gradient_text "$model"; printf "${R}"
 printf "${PIPE}"
-printf "${BOLD}${C_TEAL_LT}%s${NOBOLD}${R}" "$dir_name"
+printf "${BOLD}"; gradient_text "$dir_name"; printf "${R}"
 if [ -n "$branch" ]; then
   printf "${SEP}"
-  printf "${BOLD}${C_PURPLE}%s${NOBOLD}${R}" "$branch"
+  printf "${BOLD}"; gradient_text "$branch"; printf "${R}"
   if [ "$unsynced" -gt 0 ] 2>/dev/null; then
     printf " ${C_BLONDE_LT}↑%s${R}" "$unsynced"
   fi
