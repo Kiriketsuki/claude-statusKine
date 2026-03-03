@@ -17,6 +17,16 @@ model=$(echo "$input" | jq -r '.model.display_name // ""')
 dir=$(echo "$input" | jq -r '.workspace.current_dir // .cwd // ""')
 dir_name=$(basename "$dir")
 
+# --- smart CWD display: show parent/basename for context (e.g. dev/obKidian) ---
+raw_parent=$(dirname "$dir" 2>/dev/null)
+parent_base=$(basename "$raw_parent" 2>/dev/null)
+if [ "$raw_parent" = "$HOME" ] || [ "$raw_parent" = "/" ] || \
+   [ -z "$parent_base" ] || [ "$parent_base" = "." ]; then
+  dir_display="$dir_name"
+else
+  dir_display="${parent_base}/${dir_name}"
+fi
+
 # --- git branch + unsynced ---
 branch=""
 unsynced=0
@@ -214,6 +224,10 @@ section_marker() {
   fi
 }
 
+# --- CLI version (from input JSON when available) ---
+ver_current=$(echo "$input" | jq -r '.version // empty' 2>/dev/null)
+ver_latest=$(echo "$input" | jq -r '.latestVersion // empty' 2>/dev/null)
+
 # --- context window ---
 used=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 ctx_str=""
@@ -313,7 +327,7 @@ L1_SEP_LEN=3
 L1_BRIDGE_PAD=4
 
 model_len=${#model}
-dir_len=${#dir_name}
+dir_len=${#dir_display}    # use smart CWD display length
 
 if [ -n "$branch" ]; then
   branch_len=${#branch}
@@ -351,12 +365,12 @@ done
 # Render Line 1 with continuous gradient flowing across all segments
 printf "%b" "$BOLD"
 goff=0
-gradient_text_off " ━━  ⬢ " "$goff" "$total_grad";     goff=$(( goff + L1_PREFIX_LEN ))
-gradient_text_off "$model"   "$goff" "$total_grad";     goff=$(( goff + model_len ))
-gradient_text_off "  "       "$goff" "$total_grad";     goff=$(( goff + 2 ))
-gradient_text_off "$bridge_str" "$goff" "$total_grad";  goff=$(( goff + bridge_n ))
-gradient_text_off "  "       "$goff" "$total_grad";     goff=$(( goff + 2 ))
-gradient_text_off "$dir_name" "$goff" "$total_grad";    goff=$(( goff + dir_len ))
+gradient_text_off " ━━  ⬢ " "$goff" "$total_grad";      goff=$(( goff + L1_PREFIX_LEN ))
+gradient_text_off "$model"   "$goff" "$total_grad";      goff=$(( goff + model_len ))
+gradient_text_off "  "       "$goff" "$total_grad";      goff=$(( goff + 2 ))
+gradient_text_off "$bridge_str" "$goff" "$total_grad";   goff=$(( goff + bridge_n ))
+gradient_text_off "  "       "$goff" "$total_grad";      goff=$(( goff + 2 ))
+gradient_text_off "$dir_display" "$goff" "$total_grad";  goff=$(( goff + dir_len ))
 printf "%b" "$R"
 
 if [ -n "$branch" ]; then
@@ -373,52 +387,68 @@ printf "%b" "$BOLD"
 gradient_text_off " ━━" "$goff" "$total_grad"
 printf "%b" "$R"
 
+# Muted vertical divider used between all sections on lines 2 and 3
+# "  │  " = 2 spaces + │ (U+2502) + 2 spaces, rendered in muted colour
+DIV="  %b\xe2\x94\x82%b  "   # printf template: pass C_MUTED and R as args
+
 # ==========================================================================
 # Line 2: Usage Metrics
-# Layout:  " ▰ 5h   [bar] %2d%  (delta)    ▰ 7d   [bar] %2d%  (delta)"
-# Label field is 3 chars wide (5h→"5h ", 7d→"7d ", ctx→"ctx") so all
-# progress bars start in the same terminal column across lines 2 and 3.
+# Layout:  " ▰ 5h   [bar]  %2d%  (delta   )  │  ▰ 7d   [bar]  %2d%  (delta   )"
+# Label fields are 3-char wide; delta is padded to %-9s for fixed column width.
 # ==========================================================================
 printf "\n"
 if [ -n "$five_h" ]; then
   five_h_marker=$(section_marker "$five_h" 50 75)
   printf "%b %s 5h   %b" "$five_h_color" "$five_h_marker" "$R"
   progress_bar "$five_h" 26 138 106 50 184 160 56 75 192 64 80
-  printf " %b%2d%%%b" "$five_h_color" "$five_h" "$R"
+  printf "  %b%2d%%%b" "$five_h_color" "$five_h" "$R"
   if [ -n "$five_h_reset" ]; then
     delta=$(compute_delta "$five_h_reset")
-    [ -n "$delta" ] && printf " %b%b(%s)%b" "$DIM" "$C_MUTED" "$delta" "$R"
+    printf "  %b(%-9s)%b" "$C_MUTED" "${delta:--}" "$R"
+  else
+    printf "             "   # 13 chars: maintains column width when no reset time
   fi
 fi
 if [ -n "$seven_d" ]; then
-  [ -n "$five_h" ] && printf "    "
+  [ -n "$five_h" ] && printf "$DIV" "$C_MUTED" "$R"
   seven_d_marker=$(section_marker "$seven_d" 50 75)
   printf "%b %s 7d   %b" "$seven_d_color" "$seven_d_marker" "$R"
   progress_bar "$seven_d" 160 164 184 50 184 160 56 75 192 64 80
-  printf " %b%2d%%%b" "$seven_d_color" "$seven_d" "$R"
+  printf "  %b%2d%%%b" "$seven_d_color" "$seven_d" "$R"
   if [ -n "$seven_d_reset" ]; then
     delta=$(compute_delta "$seven_d_reset")
-    [ -n "$delta" ] && printf " %b%b(%s)%b" "$DIM" "$C_MUTED" "$delta" "$R"
+    printf "  %b(%-9s)%b" "$C_MUTED" "${delta:--}" "$R"
   fi
 fi
 
 # ==========================================================================
 # Line 3: Context + Status
-# Layout:  " ▰ ctx  [bar] %2d%  (tokens)    ◈ issues: N    ◇ inbox: N"
+# Layout:  " ▰ ctx  [bar]  %2d%  (tokens)  [⬢ handoff]  │  v2.1.63  │  ◈ N  │  ◇ N"
 # ==========================================================================
 printf "\n"
 if [ -n "$ctx_str" ]; then
   printf "%b %s ctx  %b" "$ctx_color" "$ctx_marker" "$R"
   progress_bar "$used_int" 30 136 152 50 200 120 56 80 192 64 80
-  printf " %b%2d%%%b" "$ctx_color" "$used_int" "$R"
-  [ -n "$ctx_tokens_str" ] && printf " %b%b(%s)%b" "$DIM" "$C_MUTED" "$ctx_tokens_str" "$R"
+  printf "  %b%2d%%%b" "$ctx_color" "$used_int" "$R"
+  [ -n "$ctx_tokens_str" ] && printf "  %b(%s)%b" "$C_MUTED" "$ctx_tokens_str" "$R"
   if [ "$handoff_warn" -eq 1 ]; then
-    printf " %b\xe2\xac\xa2 \xe2\x86\x92 handoff soon%b" "$C_WARN" "$R"   # ⬢ → handoff soon
+    printf "  %b\xe2\xac\xa2 \xe2\x86\x92 handoff%b" "$C_WARN" "$R"   # ⬢ → handoff
+  fi
+fi
+# Version  (shown as v2.1.63 in muted; v2.1.63 → 2.1.64 in warning if update available)
+if [ -n "$ver_current" ]; then
+  printf "$DIV" "$C_MUTED" "$R"
+  if [ -n "$ver_latest" ] && [ "$ver_current" != "$ver_latest" ]; then
+    printf "%bv%s%b %b\xe2\x86\x92 %s%b" "$C_WARN" "$ver_current" "$R" "$C_MUTED" "$ver_latest" "$R"
+  else
+    printf "%bv%s%b" "$C_MUTED" "$ver_current" "$R"
   fi
 fi
 if [ -n "$issue_count" ] && [ "$issue_count" -gt 0 ] 2>/dev/null; then
-  printf "    %b\xe2\x97\x88 issues: %s%b" "$C_TEAL" "$issue_count" "$R"        # ◈
+  printf "$DIV" "$C_MUTED" "$R"
+  printf "%b\xe2\x97\x88 issues: %s%b" "$C_TEAL" "$issue_count" "$R"         # ◈
 fi
 if [ "$inbox_depth" -gt 0 ] 2>/dev/null; then
-  printf "    %b\xe2\x97\x87 inbox: %s%b" "$C_EMERALD_LT" "$inbox_depth" "$R"  # ◇
+  printf "$DIV" "$C_MUTED" "$R"
+  printf "%b\xe2\x97\x87 inbox: %s%b" "$C_EMERALD_LT" "$inbox_depth" "$R"   # ◇
 fi
