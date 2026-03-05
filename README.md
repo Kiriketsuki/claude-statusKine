@@ -66,13 +66,36 @@ export CHRYSAKI_BAR_STYLE=hex
 
 ## Setup
 
-Install as a submodule inside your `~/.claude` directory:
+Pick the method that matches how your `~/.claude` directory is managed.
+
+### Quick init (recommended for most users)
+
+Run the bundled init script. It clones the repo into `~/.claude/statusline/` and patches `~/.claude/settings.json` automatically. Safe to re-run.
 
 ```bash
-git submodule add https://github.com/Kiriketsuki/claude-statusline.git statusline
+# One-liner — no prior clone needed
+bash <(curl -fsSL https://raw.githubusercontent.com/Kiriketsuki/claude-statusline/main/init.sh)
 ```
 
-Wire up `~/.claude/settings.json`:
+Or, if you've already cloned this repo:
+
+```bash
+bash init.sh
+```
+
+The script backs up `settings.json` to `settings.json.bak` before modifying it. Requires `git` and `jq`.
+
+---
+
+### Option A: Plain clone (no git repo required)
+
+If `~/.claude` is a regular directory (not a git repo), clone directly:
+
+```bash
+git clone https://github.com/Kiriketsuki/claude-statusline.git ~/.claude/statusline
+```
+
+Then wire up `~/.claude/settings.json` (create the file if it doesn't exist):
 
 ```json
 {
@@ -99,6 +122,21 @@ Wire up `~/.claude/settings.json`:
   }
 }
 ```
+
+To update later: `git -C ~/.claude/statusline pull`
+
+---
+
+### Option B: Git submodule (if `~/.claude` is a git repo)
+
+```bash
+cd ~/.claude
+git submodule add https://github.com/Kiriketsuki/claude-statusline.git statusline
+```
+
+Wire up `~/.claude/settings.json` with the same JSON block shown in Option A above.
+
+To update later: `git -C ~/.claude submodule update --remote statusline`
 
 ## Cross-Platform Compatibility
 
