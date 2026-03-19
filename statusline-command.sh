@@ -590,28 +590,31 @@ if [ -n "$seven_d" ]; then
   printf "  %b%s%b" "$seven_d_color" "$seven_d_pct_str" "$R"
   [ -n "$delta7" ] && printf "  %b(%s)%b" "$seven_d_color" "$delta7" "$R"
 fi
-if [ -n "${five_h}${seven_d}" ] && [ "$l2_has_right" -eq 1 ]; then
+if [ -n "${five_h}${seven_d}" ]; then
   l2_left_w=0
   [ -n "$five_h"  ] && l2_left_w=$(( l2_left_w + five_h_sec_w ))
   [ -n "$five_h"  ] && [ -n "$seven_d" ] && l2_left_w=$(( l2_left_w + 5 ))
   [ -n "$seven_d" ] && l2_left_w=$(( l2_left_w + seven_d_sec_w ))
-  bridge2_n=$(( COLS - l2_left_w - l2_right_w - L23_BRIDGE_PAD ))
+  _l2_trailing=$(( l2_has_right == 1 ? l2_right_w : 0 ))
+  bridge2_n=$(( COLS - l2_left_w - _l2_trailing - L23_BRIDGE_PAD ))
   [ "$bridge2_n" -lt 1 ] && bridge2_n=1
   printf "  %b" "$C_MUTED"
   bi=0; while [ "$bi" -lt "$bridge2_n" ]; do printf "─"; bi=$(( bi + 1 )); done
   printf "  %b" "$R"
-  l2_first=1
-  if [ -n "$ver_current" ]; then
-    if [ -n "$ver_latest" ] && [ "$ver_current" != "$ver_latest" ]; then
-      printf "%bv%s \xe2\x86\x92 %s%b" "$C_WARN" "$ver_current" "$ver_latest" "$R"
-    else
-      printf "%bv%s%b" "$C_MUTED" "$ver_current" "$R"
+  if [ "$l2_has_right" -eq 1 ]; then
+    l2_first=1
+    if [ -n "$ver_current" ]; then
+      if [ -n "$ver_latest" ] && [ "$ver_current" != "$ver_latest" ]; then
+        printf "%bv%s \xe2\x86\x92 %s%b" "$C_WARN" "$ver_current" "$ver_latest" "$R"
+      else
+        printf "%bv%s%b" "$C_MUTED" "$ver_current" "$R"
+      fi
+      l2_first=0
     fi
-    l2_first=0
-  fi
-  if [ -n "$issue_count" ] && [ "$issue_count" -gt 0 ] 2>/dev/null; then
-    [ "$l2_first" -eq 0 ] && printf "$DIV" "$C_MUTED" "$R"
-    printf "%b\xe2\x97\x88 %s%b" "$C_TEAL" "$issue_count" "$R"
+    if [ -n "$issue_count" ] && [ "$issue_count" -gt 0 ] 2>/dev/null; then
+      [ "$l2_first" -eq 0 ] && printf "$DIV" "$C_MUTED" "$R"
+      printf "%b\xe2\x97\x88 %s%b" "$C_TEAL" "$issue_count" "$R"
+    fi
   fi
 fi
 
