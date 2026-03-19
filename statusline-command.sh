@@ -67,8 +67,12 @@ if [ -f "$SCRATCH" ]; then
   inbox_depth=$(awk '/^## Ramblings/{found=1; next} /^## /{found=0} found && /^- /{c++} END{print c+0}' "$SCRATCH")
 fi
 
-# --- usage stats (5h / 7d) from cache ---
-CACHE_FILE="/tmp/.claude_usage_cache"
+# --- usage stats (5h / 7d) from per-account cache ---
+case "$dir" in
+  */workdev/Aurrigo*) _acct=".claude-aurrigo" ;;
+  *)                  _acct=".claude" ;;
+esac
+CACHE_FILE="/tmp/.claude_usage_cache_${_acct}"
 five_h=""
 seven_d=""
 five_h_reset=""

@@ -8,9 +8,10 @@
 # Line 4: seven_day.resets_at (raw ISO string)
 # All output is suppressed; meant to be run in background.
 #
-CACHE_FILE="/tmp/.claude_usage_cache"
-TOKEN_CACHE="/tmp/.claude_token_cache"
-CREDS_FILE="$HOME/.claude/.credentials.json"
+_acct=$(basename "${CLAUDE_CONFIG_DIR:-$HOME/.claude}")
+CACHE_FILE="/tmp/.claude_usage_cache_${_acct}"
+TOKEN_CACHE="/tmp/.claude_token_cache_${_acct}"
+CREDS_FILE="${CLAUDE_CONFIG_DIR:-$HOME/.claude}/.credentials.json"
 TOKEN_TTL=900  # 15 minutes
 
 # --- get token (with 15-min cache to avoid repeated credential reads) ---
