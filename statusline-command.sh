@@ -403,7 +403,7 @@ esac
 claude_email=$(jq -r '.oauthAccount.emailAddress // empty' "$_creds_file" 2>/dev/null)
 [ -z "$claude_email" ] && claude_email="unknown"
 
-# Pre-compute deltas and section widths for cross-line | alignment
+# Pre-compute deltas and section widths for bridge rendering
 delta5="" delta7=""
 [ -n "$five_h_reset" ] && delta5=$(compute_delta "$five_h_reset")
 [ -n "$seven_d_reset" ] && delta7=$(compute_delta "$seven_d_reset")
@@ -415,6 +415,13 @@ if [ -n "$five_h" ]; then
   [ -n "$delta5" ] && five_h_sec_w=$(( five_h_sec_w + 2 + 1 + ${#delta5} + 1 ))
 fi
 
+seven_d_sec_w=0
+if [ -n "$seven_d" ]; then
+  seven_d_pct_str=$(printf "%2d%%" "$seven_d")
+  seven_d_sec_w=$(( 8 + 8 + 2 + ${#seven_d_pct_str} ))
+  [ -n "$delta7" ] && seven_d_sec_w=$(( seven_d_sec_w + 2 + 1 + ${#delta7} + 1 ))
+fi
+
 ctx_sec_w=0
 if [ -n "$ctx_str" ]; then
   ctx_pct_str=$(printf "%2d%%" "$used_int")
@@ -422,12 +429,44 @@ if [ -n "$ctx_str" ]; then
   [ -n "$ctx_tokens_str" ] && ctx_sec_w=$(( ctx_sec_w + 2 + 1 + ${#ctx_tokens_str} + 1 ))
 fi
 
-if   [ "$five_h_sec_w" -gt 0 ] && [ "$ctx_sec_w" -gt 0 ]; then
-  first_w=$(( five_h_sec_w > ctx_sec_w ? five_h_sec_w : ctx_sec_w ))
-elif [ "$five_h_sec_w" -gt 0 ]; then first_w="$five_h_sec_w"
-elif [ "$ctx_sec_w"    -gt 0 ]; then first_w="$ctx_sec_w"
-else                                  first_w=0
+# Right cluster widths and bridge padding
+L23_BRIDGE_PAD=4
+
+# Line 2 right cluster: version + issues (moved from L3)
+l2_right_w=0
+l2_has_right=0
+if [ -n "$ver_current" ]; then
+  if [ -n "$ver_latest" ] && [ "$ver_current" != "$ver_latest" ]; then
+    _vw=$(( 1 + ${#ver_current} + 3 + ${#ver_latest} ))          # "vX → Y"
+  else
+    _vw=$(( 1 + ${#ver_current} ))                                # "vX"
+  fi
+  l2_right_w=$(( l2_right_w + _vw ))
+  l2_has_right=1
 fi
+if [ -n "$issue_count" ] && [ "$issue_count" -gt 0 ] 2>/dev/null; then
+  [ "$l2_has_right" -eq 1 ] && l2_right_w=$(( l2_right_w + 5 )) # "  │  "
+  l2_right_w=$(( l2_right_w + 2 + ${#issue_count} ))             # "◈ N"
+  l2_has_right=1
+fi
+
+# Line 3 right cluster: inbox + email (version/issues moved to L2)
+# Handoff is embedded in bridge split when active — not counted here
+l3_right_w=0
+l3_has_right=0
+if [ "$inbox_depth" -gt 0 ] 2>/dev/null; then
+  l3_right_w=$(( l3_right_w + 2 + ${#inbox_depth} ))             # "◇ N"
+  l3_has_right=1
+fi
+if [ -n "$ctx_str" ]; then                                        # email always shown with ctx
+  [ "$l3_has_right" -eq 1 ] && l3_right_w=$(( l3_right_w + 5 )) # "  │  "
+  l3_right_w=$(( l3_right_w + 2 + ${#claude_email} ))            # "▰ email"
+  l3_has_right=1
+fi
+
+# Line 3 handoff center width (for bridge split when active)
+handoff_center_w=0
+[ "$handoff_warn" -eq 1 ] && handoff_center_w=13                 # " ⬢ → handoff " = 1+11+1
 
 # --- model badge: shape encodes model tier, pulses solid/outline every 2 seconds ---
 # Haiku = ▲/△ (triangle, 3)  Sonnet = ⬟/⬠ (pentagon, 5)  Opus = ⬢/⬡ (hexagon, 6)
@@ -530,9 +569,8 @@ DIV="  %b\xe2\x94\x82%b  "   # printf template: pass C_MUTED and R as args
 
 # ==========================================================================
 # Line 2: Usage Metrics
-# Layout:  " ▰ 5h   [bar]  27%  (3h 59m)  [pad]  │  ▰ 7d   [bar]  52%  (4d 18h)"
-# First section padded to first_w (max of 5h/ctx section widths) for │ alignment.
-# Delta and percentage use the same colour as the section's usage indicator.
+# Layout:  " ▰ 5h   [bar]  27%  (3h 59m)  │  ▰ 7d   [bar]  52%  (4d 18h)  ──bridge──  v2.1.79  │  ◈ N"
+# DIV (│) between 5h and 7d; bridge fills gap to right cluster (version + issues).
 # ==========================================================================
 printf "\n"
 if [ -n "$five_h" ]; then
@@ -541,22 +579,46 @@ if [ -n "$five_h" ]; then
   progress_bar "$five_h" 26 138 106 50 184 160 56 75 192 64 80
   printf "  %b%s%b" "$five_h_color" "$five_h_pct_str" "$R"
   [ -n "$delta5" ] && printf "  %b(%s)%b" "$five_h_color" "$delta5" "$R"
-  five_h_pad=$(( first_w - five_h_sec_w ))
-  [ "$five_h_pad" -gt 0 ] && printf "%*s" "$five_h_pad" ""
+fi
+if [ -n "$five_h" ] && [ -n "$seven_d" ]; then
+  printf "$DIV" "$C_MUTED" "$R"
 fi
 if [ -n "$seven_d" ]; then
-  [ -n "$five_h" ] && printf "$DIV" "$C_MUTED" "$R"
   seven_d_marker=$(section_marker "$seven_d" 50 75)
   printf "%b %s 7d   %b" "$seven_d_color" "$seven_d_marker" "$R"
   progress_bar "$seven_d" 160 164 184 50 184 160 56 75 192 64 80
-  printf "  %b%2d%%%b" "$seven_d_color" "$seven_d" "$R"
+  printf "  %b%s%b" "$seven_d_color" "$seven_d_pct_str" "$R"
   [ -n "$delta7" ] && printf "  %b(%s)%b" "$seven_d_color" "$delta7" "$R"
+fi
+if [ -n "${five_h}${seven_d}" ] && [ "$l2_has_right" -eq 1 ]; then
+  l2_left_w=0
+  [ -n "$five_h"  ] && l2_left_w=$(( l2_left_w + five_h_sec_w ))
+  [ -n "$five_h"  ] && [ -n "$seven_d" ] && l2_left_w=$(( l2_left_w + 5 ))
+  [ -n "$seven_d" ] && l2_left_w=$(( l2_left_w + seven_d_sec_w ))
+  bridge2_n=$(( COLS - l2_left_w - l2_right_w - L23_BRIDGE_PAD ))
+  [ "$bridge2_n" -lt 1 ] && bridge2_n=1
+  printf "  %b" "$C_MUTED"
+  bi=0; while [ "$bi" -lt "$bridge2_n" ]; do printf "─"; bi=$(( bi + 1 )); done
+  printf "  %b" "$R"
+  l2_first=1
+  if [ -n "$ver_current" ]; then
+    if [ -n "$ver_latest" ] && [ "$ver_current" != "$ver_latest" ]; then
+      printf "%bv%s \xe2\x86\x92 %s%b" "$C_WARN" "$ver_current" "$ver_latest" "$R"
+    else
+      printf "%bv%s%b" "$C_MUTED" "$ver_current" "$R"
+    fi
+    l2_first=0
+  fi
+  if [ -n "$issue_count" ] && [ "$issue_count" -gt 0 ] 2>/dev/null; then
+    [ "$l2_first" -eq 0 ] && printf "$DIV" "$C_MUTED" "$R"
+    printf "%b\xe2\x97\x88 %s%b" "$C_TEAL" "$issue_count" "$R"
+  fi
 fi
 
 # ==========================================================================
 # Line 3: Context + Status
-# Layout:  " ▰ ctx  [bar]  77%  (154k/200k)  [pad]  │  [⬢→handoff]  │  v2.1.63  │  ◈ N  │  ◇ N"
-# ctx section padded to first_w; all right-side elements share │ dividers.
+# Layout:  " ▰ ctx  [bar]  64%  (114k/200k)  ──[bridge_left]── ⬢→handoff ──[bridge_right]──  ◇ N  │  ▰ email"
+# When handoff inactive: single continuous bridge. Right cluster: inbox + email only.
 # ==========================================================================
 printf "\n"
 if [ -n "$ctx_str" ]; then
@@ -564,38 +626,44 @@ if [ -n "$ctx_str" ]; then
   progress_bar "$used_int" 30 136 152 50 200 120 56 80 192 64 80
   printf "  %b%s%b" "$ctx_color" "$ctx_pct_str" "$R"
   [ -n "$ctx_tokens_str" ] && printf "  %b(%s)%b" "$ctx_color" "$ctx_tokens_str" "$R"
-  ctx_pad=$(( first_w - ctx_sec_w ))
-  [ "$ctx_pad" -gt 0 ] && printf "%*s" "$ctx_pad" ""
-  if [ "$handoff_warn" -eq 1 ]; then
-    printf "$DIV" "$C_MUTED" "$R"
-    # Handoff beacon: alternates solid/outline hexagon + bright/dim every 2s.
-    # All four combinations of badge_tick and NO_COLOUR handled explicitly.
-    if [ "$badge_tick" -eq 0 ] && [ "$NO_COLOUR" -eq 0 ]; then
-      printf "%b\xe2\xac\xa2 \xe2\x86\x92 handoff%b" "$C_WARN" "$R"             # ⬢ solid, bright (colour)
-    elif [ "$badge_tick" -eq 0 ]; then
-      printf "\xe2\xac\xa2 \xe2\x86\x92 handoff"                                 # ⬢ solid, no colour
-    elif [ "$NO_COLOUR" -eq 1 ]; then
-      printf "\xe2\xac\xa1 \xe2\x86\x92 handoff"                                 # ⬡ outline, no colour
+  if [ "$l3_has_right" -eq 1 ]; then
+    if [ "$handoff_warn" -eq 1 ]; then
+      # Handoff active: bridge splits around handoff text (1/3 left, 2/3 right)
+      total_dashes=$(( COLS - ctx_sec_w - l3_right_w - L23_BRIDGE_PAD - handoff_center_w ))
+      [ "$total_dashes" -lt 2 ] && total_dashes=2
+      bridge_left=$(( total_dashes / 3 ))
+      bridge_right=$(( total_dashes - bridge_left ))
+      [ "$bridge_left" -lt 1 ] && bridge_left=1
+      printf "  %b" "$C_MUTED"
+      bi=0; while [ "$bi" -lt "$bridge_left" ]; do printf "─"; bi=$(( bi + 1 )); done
+      printf "%b " "$R"
+      if [ "$badge_tick" -eq 0 ] && [ "$NO_COLOUR" -eq 0 ]; then
+        printf "%b\xe2\xac\xa2 \xe2\x86\x92 handoff%b" "$C_WARN" "$R"           # ⬢ solid, bright
+      elif [ "$badge_tick" -eq 0 ]; then
+        printf "\xe2\xac\xa2 \xe2\x86\x92 handoff"                               # ⬢ solid, no colour
+      elif [ "$NO_COLOUR" -eq 1 ]; then
+        printf "\xe2\xac\xa1 \xe2\x86\x92 handoff"                               # ⬡ outline, no colour
+      else
+        printf "\033[38;2;110;96;34m\xe2\xac\xa1 \xe2\x86\x92 handoff%b" "$R"   # ⬡ outline, dim
+      fi
+      printf " %b" "$C_MUTED"
+      bi=0; while [ "$bi" -lt "$bridge_right" ]; do printf "─"; bi=$(( bi + 1 )); done
+      printf "  %b" "$R"
     else
-      printf "\033[38;2;110;96;34m\xe2\xac\xa1 \xe2\x86\x92 handoff%b" "$R"      # ⬡ outline, dim
+      # Handoff inactive: single continuous bridge
+      bridge3_n=$(( COLS - ctx_sec_w - l3_right_w - L23_BRIDGE_PAD ))
+      [ "$bridge3_n" -lt 1 ] && bridge3_n=1
+      printf "  %b" "$C_MUTED"
+      bi=0; while [ "$bi" -lt "$bridge3_n" ]; do printf "─"; bi=$(( bi + 1 )); done
+      printf "  %b" "$R"
     fi
-  fi
-  if [ -n "$ver_current" ]; then
-    printf "$DIV" "$C_MUTED" "$R"
-    if [ -n "$ver_latest" ] && [ "$ver_current" != "$ver_latest" ]; then
-      printf "%bv%s \xe2\x86\x92 %s%b" "$C_WARN" "$ver_current" "$ver_latest" "$R"
-    else
-      printf "%bv%s%b" "$C_MUTED" "$ver_current" "$R"
+    # Right cluster: inbox (optional) + email (always)
+    l3_first=1
+    if [ "$inbox_depth" -gt 0 ] 2>/dev/null; then
+      printf "%b\xe2\x97\x87 %s%b" "$C_EMERALD_LT" "$inbox_depth" "$R"
+      l3_first=0
     fi
+    [ "$l3_first" -eq 0 ] && printf "$DIV" "$C_MUTED" "$R"
+    printf "%b\xe2\x96\xb0 %s%b" "$C_ACCOUNT" "$claude_email" "$R"
   fi
-  if [ -n "$issue_count" ] && [ "$issue_count" -gt 0 ] 2>/dev/null; then
-    printf "$DIV" "$C_MUTED" "$R"
-    printf "%b\xe2\x97\x88 issues: %s%b" "$C_TEAL" "$issue_count" "$R"
-  fi
-  if [ "$inbox_depth" -gt 0 ] 2>/dev/null; then
-    printf "$DIV" "$C_MUTED" "$R"
-    printf "%b\xe2\x97\x87 inbox: %s%b" "$C_EMERALD_LT" "$inbox_depth" "$R"
-  fi
-  printf "$DIV" "$C_MUTED" "$R"
-  printf "%b\xe2\x96\xb0 %s%b" "$C_ACCOUNT" "$claude_email" "$R"
 fi
