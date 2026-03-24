@@ -49,6 +49,13 @@ if [ -z "$usage_json" ]; then
   exit 0
 fi
 
+# Detect auth errors (expired/invalid token) — purge token cache so next run re-reads credentials
+_err_type=$(printf '%s' "$usage_json" | jq -r '.error.type // empty' 2>/dev/null)
+if [ "$_err_type" = "authentication_error" ]; then
+  rm -f "$TOKEN_CACHE"
+  exit 0
+fi
+
 five_h_raw=$(printf '%s' "$usage_json" | jq -r '.five_hour.utilization // empty' 2>/dev/null)
 seven_d_raw=$(printf '%s' "$usage_json" | jq -r '.seven_day.utilization // empty' 2>/dev/null)
 five_h_reset=$(printf '%s' "$usage_json" | jq -r '.five_hour.resets_at // ""' 2>/dev/null)
