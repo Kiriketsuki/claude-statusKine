@@ -1014,3 +1014,13 @@ if [ -n "$branch" ]; then
   _l4_trail=$(( COLS - _l4_total_w - 3 ))
   [ "$_l4_trail" -gt 0 ] && print_bridge_end "$_l4_trail"
 fi
+
+# --- cost cache: written each render for Stop hook export-cost.sh ---
+_session_id=$(echo "$input" | jq -r '.session_id // empty' 2>/dev/null)
+_cost_cache="/tmp/.chrysaki_cost_cache"
+_cost_tmp="${_cost_cache}.$$"
+printf "%s\n%s\n%s\n%s\n%s\n%s\n" \
+  "$model" "$cost_usd" "$cost_sgd" "$session_clock" \
+  "$_session_id" "$dir" > "$_cost_tmp"
+mv -f "$_cost_tmp" "$_cost_cache"
+chmod 600 "$_cost_cache" 2>/dev/null
