@@ -1,0 +1,135 @@
+<h2>Chrysaki Expanded Palette</h2>
+<p class="subtitle">Interpolated jewel tones for random alternation on bridges and accents</p>
+
+<div class="section">
+  <h3>Current 3-Stop Gradient (Being Removed)</h3>
+  <div style="display: flex; height: 48px; border-radius: 8px; overflow: hidden; margin-bottom: 8px;">
+    <div style="flex:1; background: #1a8a6a; display:flex; align-items:center; justify-content:center; color:white; font-size:11px; font-weight:bold;">Emerald Lt<br>#1a8a6a</div>
+    <div style="flex:1; background: #1c3d7a; display:flex; align-items:center; justify-content:center; color:white; font-size:11px; font-weight:bold;">Royal Blue Lt<br>#1c3d7a</div>
+    <div style="flex:1; background: #583090; display:flex; align-items:center; justify-content:center; color:white; font-size:11px; font-weight:bold;">Amethyst Lt<br>#583090</div>
+  </div>
+  <p style="color: #c04050; font-size: 13px;">Looks like a frozen smear when static. Removing gradient_text and gradient_text_off functions.</p>
+</div>
+
+<div class="section">
+  <h3>Expanded Palette: 9 Jewel Tones</h3>
+  <p style="font-size: 13px; color: #a0a4b8; margin-bottom: 12px;">
+    3 original stops + 6 interpolated midpoints. Bridges and accents randomly pick from this pool each render.
+  </p>
+
+  <!-- Row 1: Emerald → Royal Blue interpolations -->
+  <div style="display: flex; height: 56px; border-radius: 8px; overflow: hidden; margin-bottom: 4px; gap: 2px;">
+    <div style="flex:1; background: rgb(26,138,106); display:flex; align-items:center; justify-content:center; color:white; font-size:10px; font-weight:bold; text-align:center;">
+      Emerald Lt<br>26,138,106
+    </div>
+    <div style="flex:1; background: rgb(26,119,100); display:flex; align-items:center; justify-content:center; color:white; font-size:10px; font-weight:bold; text-align:center;">
+      Jade<br>26,119,100
+    </div>
+    <div style="flex:1; background: rgb(27,99,114); display:flex; align-items:center; justify-content:center; color:white; font-size:10px; font-weight:bold; text-align:center;">
+      Deep Teal<br>27,99,114
+    </div>
+    <div style="flex:1; background: rgb(28,61,122); display:flex; align-items:center; justify-content:center; color:white; font-size:10px; font-weight:bold; text-align:center;">
+      Royal Blue Lt<br>28,61,122
+    </div>
+    <div style="flex:1; background: rgb(43,55,128); display:flex; align-items:center; justify-content:center; color:white; font-size:10px; font-weight:bold; text-align:center;">
+      Sapphire<br>43,55,128
+    </div>
+    <div style="flex:1; background: rgb(58,48,133); display:flex; align-items:center; justify-content:center; color:white; font-size:10px; font-weight:bold; text-align:center;">
+      Indigo<br>58,48,133
+    </div>
+    <div style="flex:1; background: rgb(88,48,144); display:flex; align-items:center; justify-content:center; color:white; font-size:10px; font-weight:bold; text-align:center;">
+      Amethyst Lt<br>88,48,144
+    </div>
+    <div style="flex:1; background: rgb(70,72,136); display:flex; align-items:center; justify-content:center; color:white; font-size:10px; font-weight:bold; text-align:center;">
+      Twilight<br>70,72,136
+    </div>
+    <div style="flex:1; background: rgb(50,96,126); display:flex; align-items:center; justify-content:center; color:white; font-size:10px; font-weight:bold; text-align:center;">
+      Storm<br>50,96,126
+    </div>
+  </div>
+  <p style="font-size: 11px; color: #6a6e82; margin-bottom: 16px;">
+    Interpolation path: Emerald &rarr; Jade &rarr; Deep Teal &rarr; Royal Blue &rarr; Sapphire &rarr; Indigo &rarr; Amethyst &rarr; Twilight &rarr; Storm &rarr; (back to Emerald)
+  </p>
+</div>
+
+<div class="section">
+  <h3>How It Works: Random Alternation</h3>
+  <div class="mockup">
+    <div class="mockup-header">Bridge Colour Selection (per render)</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 12px; line-height: 2;">
+      <div style="color: #a0a4b8;">
+        # Each render, hash the timestamp to pick colours:<br>
+        _seed=$(date +%s)<br>
+        _c1=$(( _seed % 9 ))         # L1 accent<br>
+        _c2=$(( (_seed / 3) % 9 ))   # L2 bridges<br>
+        _c3=$(( (_seed / 7) % 9 ))   # L3 bridges<br>
+        _c4=$(( (_seed / 11) % 9 ))  # L4 bridges + branch<br>
+      </div>
+      <div style="margin-top: 12px; color: #a0a4b8;">
+        # Different primes ensure each line gets a different colour,<br>
+        # and the colours shift on every render (even at 1fps).<br>
+        # Adjacent lines are guaranteed different at any given moment.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Before vs After: Line 1</h3>
+
+  <div style="margin-bottom: 16px;">
+    <div class="label">BEFORE (frozen gradient - looks broken)</div>
+    <div style="font-family: monospace; font-size: 13px; padding: 12px; background: #0d1117; border-radius: 6px; white-space: pre; overflow-x: auto;">
+      <span style="font-weight:bold;"><span style="color:rgb(26,138,106)"> </span><span style="color:rgb(26,125,109);">━</span><span style="color:rgb(27,112,112);">━</span><span style="color:rgb(27,99,114);">  </span><span style="color:rgb(28,80,118);">⬢</span><span style="color:rgb(28,61,122);"> Claude Opus 4.6 (1M context)</span><span style="color:rgb(35,57,124);">   ━━━</span><span style="color:rgb(50,50,130);">━━━━━━</span><span style="color:rgb(65,46,136);">━━━━━━</span><span style="color:rgb(80,47,141);">━━━━</span><span style="color:rgb(88,48,144);">   v2.1.84</span></span>
+    </div>
+  </div>
+
+  <div>
+    <div class="label">AFTER (solid colour per element, random jewel tone bridges)</div>
+    <div style="font-family: monospace; font-size: 13px; padding: 12px; background: #0d1117; border-radius: 6px; white-space: pre; overflow-x: auto;">
+      <span style="font-weight:bold; color: rgb(26,138,106);"> ━━  </span><span style="font-weight:bold; color: rgb(26,138,106);">⬢ Claude Opus 4.6 (1M context)</span><span style="color: rgb(43,55,128);">   ━━━━━━━━━━━━━━━━━━━━━   </span><span style="font-weight:bold; color: rgb(160,164,184);">v2.1.84</span><span style="color: rgb(58,48,133);">   ━━━━━━━━━━━━   </span><span style="font-weight:bold; color: rgb(26,138,106);">Claude/statusline</span><span style="color: rgb(70,72,136);">   ━   </span><span style="color: rgb(26,138,106);">kiriketsuki@gmail.com</span><span style="color: rgb(88,48,144);"> ━━━━━━</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Before vs After: Line 4 Branch</h3>
+
+  <div style="margin-bottom: 16px;">
+    <div class="label">BEFORE (gradient on branch name)</div>
+    <div style="font-family: monospace; font-size: 13px; padding: 12px; background: #0d1117; border-radius: 6px; white-space: pre;">
+      <span style="color:#6a6e82;"> ⎇ </span><span style="font-weight:bold;"><span style="color:rgb(26,138,106);">f</span><span style="color:rgb(26,127,108);">e</span><span style="color:rgb(26,116,111);">a</span><span style="color:rgb(27,105,113);">t</span><span style="color:rgb(27,94,115);">/</span><span style="color:rgb(27,83,117);">i</span><span style="color:rgb(27,72,119);">s</span><span style="color:rgb(28,61,122);">s</span><span style="color:rgb(35,57,124);">u</span><span style="color:rgb(43,54,127);">e</span><span style="color:rgb(50,50,130);">-</span><span style="color:rgb(58,47,133);">4</span></span>
+    </div>
+  </div>
+
+  <div>
+    <div class="label">AFTER (solid jewel tone, randomly picked per render)</div>
+    <div style="font-family: monospace; font-size: 13px; padding: 12px; background: #0d1117; border-radius: 6px; white-space: pre;">
+      <span style="color:#6a6e82;"> ⎇ </span><span style="font-weight:bold; color: rgb(27,99,114);">feat/issue-4-statusline-v2</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Replacement Rules</h3>
+  <div style="display: grid; gap: 8px; font-size: 13px;">
+    <div style="padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+      <strong>Line 1 prefix + model name:</strong> Solid Emerald Lt (matches existing identity colour for the model tier)
+    </div>
+    <div style="padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+      <strong>Line 1 bridges (━━━):</strong> Random jewel tone from the 9-colour pool, different per bridge segment
+    </div>
+    <div style="padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+      <strong>Line 1 version:</strong> Secondary (#a0a4b8) -- informational, not decorative
+    </div>
+    <div style="padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+      <strong>Line 1 CWD:</strong> Bold, Emerald Lt (when linked) or random jewel tone
+    </div>
+    <div style="padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+      <strong>Line 4 branch:</strong> Bold, random jewel tone (replaces gradient_text)
+    </div>
+    <div style="padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+      <strong>L2/L3/L4 bridges:</strong> Already use <code>_bridge_rot</code> 3-colour rotation -- expand to 9-colour pool with same prime-hash approach
+    </div>
+  </div>
+</div>

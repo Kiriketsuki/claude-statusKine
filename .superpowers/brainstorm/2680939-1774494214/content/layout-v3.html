@@ -1,0 +1,91 @@
+<h2>Your Layout — First Draft</h2>
+<p class="subtitle">L1 Brand / L2 Usage+Session / L3 Context+Cache / L4 Git. Wider terminal (~160 cols). Generous spacing.</p>
+
+<div class="mockup">
+  <div class="mockup-header">Chrysaki V2 — 4-Line Layout</div>
+  <div class="mockup-body" style="font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 12.5px; line-height: 2.2; background: #1a1b26; color: #a9b1d6; padding: 1.5rem 2rem; border-radius: 8px; overflow-x: auto;">
+    <div style="white-space: pre; min-width: 150ch;">
+<span style="color:#6a6e82; opacity:0.4;">L1</span>  <span style="color:#1a8a6a;">━━</span>  <span style="color:#1c3d7a;">⬢</span> <span style="background: linear-gradient(90deg, #1a8a6a, #1c3d7a, #583090); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Claude Opus 4.6</span>  <span style="color:#1a8a6a;">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>  <span style="color:#6a6e82;">v2.1.79</span>  <span style="color:#6a6e82;">│</span>  <span style="color:#1a8a6a;">▰ personal</span>  <span style="color:#583090;">━━</span>
+<span style="color:#6a6e82; opacity:0.4;">L2</span>  <span style="color:#1a8a6a;">▰</span> <span style="color:#6a6e82;">5h</span>   <span style="color:#1a8a6a;">▲▼▲▼</span><span style="color:#40465a;">△▽△▽</span>   <span style="color:#1a8a6a;">27%</span>  <span style="color:#6a6e82;">(3h 59m)</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">▰</span> <span style="color:#6a6e82;">7d</span>   <span style="color:#a0a4b8;">▲▼▲▼</span><span style="color:#40465a;">△▽△▽</span>   <span style="color:#a0a4b8;">52%</span>  <span style="color:#6a6e82;">(4d 18h)</span>   <span style="color:#6a6e82;">──────────</span>   <span style="color:#a0a4b8;">~18 t/s</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#d0b850;">$0.42</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">12m</span>
+<span style="color:#6a6e82; opacity:0.4;">L3</span>  <span style="color:#1e8898;">▰</span> <span style="color:#6a6e82;">ctx</span>  <span style="color:#1e8898;">▲▼▲▼▲</span><span style="color:#40465a;">△▽△</span>   <span style="color:#1e8898;">64%</span>  <span style="color:#6a6e82;">(114k / 200k)</span>   <span style="color:#1e8898;">C</span><span style="color:#1e8898;">⧈</span> <span style="color:#1e8898;">80k</span>   <span style="color:#d0b850;">W</span><span style="color:#d0b850;">□</span> <span style="color:#d0b850;">12k</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#6a6e82;">42k in</span>  <span style="color:#6a6e82;">8k out</span>   <span style="color:#6a6e82;">──────────────────────</span>   <span style="color:#1a8a6a;">◇ 5</span>
+<span style="color:#6a6e82; opacity:0.4;">L4</span>  <span style="color:#1c3d7a;">◈</span> <span style="color:#1c3d7a;">feat/issue-4-statusline-v2</span>   <span style="color:#d0b850;">↑2</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1a8a6a;">+34</span> <span style="color:#c04050;">-12</span>   <span style="color:#6a6e82;">──────────────────────────────────────────────────</span>   <span style="color:#1e8898;">◈ 3</span>
+    </div>
+  </div>
+</div>
+
+<h3 style="margin-top: 2rem;">With Handoff Warning Active (ctx >= 100k)</h3>
+<div class="mockup">
+  <div class="mockup-header">Chrysaki V2 — Handoff State</div>
+  <div class="mockup-body" style="font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 12.5px; line-height: 2.2; background: #1a1b26; color: #a9b1d6; padding: 1.5rem 2rem; border-radius: 8px; overflow-x: auto;">
+    <div style="white-space: pre; min-width: 150ch;">
+<span style="color:#6a6e82; opacity:0.4;">L1</span>  <span style="color:#1a8a6a;">━━</span>  <span style="color:#1c3d7a;">⬢</span> <span style="background: linear-gradient(90deg, #1a8a6a, #1c3d7a, #583090); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Claude Opus 4.6</span>  <span style="color:#1a8a6a;">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>  <span style="color:#6a6e82;">v2.1.79</span>  <span style="color:#6a6e82;">│</span>  <span style="color:#1a8a6a;">▰ personal</span>  <span style="color:#583090;">━━</span>
+<span style="color:#6a6e82; opacity:0.4;">L2</span>  <span style="color:#b8a038;">▱</span> <span style="color:#6a6e82;">5h</span>   <span style="color:#b8a038;">▲▼▲▼▲▼</span><span style="color:#40465a;">△▽</span>   <span style="color:#b8a038;">68%</span>  <span style="color:#6a6e82;">(1h 22m)</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">▰</span> <span style="color:#6a6e82;">7d</span>   <span style="color:#a0a4b8;">▲▼▲▼</span><span style="color:#40465a;">△▽△▽</span>   <span style="color:#a0a4b8;">52%</span>  <span style="color:#6a6e82;">(4d 18h)</span>   <span style="color:#6a6e82;">──────────</span>   <span style="color:#a0a4b8;">~22 t/s</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#d0b850;">$1.87</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">48m</span>
+<span style="color:#6a6e82; opacity:0.4;">L3</span>  <span style="color:#c04050;">◆</span> <span style="color:#6a6e82;">ctx</span>  <span style="color:#c04050;">▲▼▲▼▲▼▲</span><span style="color:#40465a;">△</span>   <span style="color:#c04050;">82%</span>  <span style="color:#6a6e82;">(164k / 200k)</span>   <span style="color:#1e8898;">C</span><span style="color:#1e8898;">⧈</span> <span style="color:#1e8898;">140k</span>   <span style="color:#d0b850;">W</span><span style="color:#d0b850;">□</span> <span style="color:#d0b850;">8k</span>   <span style="color:#6a6e82;">───</span>   <span style="color:#c04050;">⬢</span> <span style="color:#c04050;">→ handoff</span>   <span style="color:#6a6e82;">───────────</span>   <span style="color:#1a8a6a;">◇ 5</span>
+<span style="color:#6a6e82; opacity:0.4;">L4</span>  <span style="color:#1c3d7a;">◈</span> <span style="color:#1c3d7a;">feat/issue-4-statusline-v2</span>   <span style="color:#d0b850;">↑2</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1a8a6a;">+187</span> <span style="color:#c04050;">-43</span>   <span style="color:#6a6e82;">──────────────────────────────────────────────────</span>   <span style="color:#1e8898;">◈ 3</span>
+    </div>
+  </div>
+</div>
+
+<h3 style="margin-top: 2rem;">With Worktree Active</h3>
+<div class="mockup">
+  <div class="mockup-header">Chrysaki V2 — Worktree State</div>
+  <div class="mockup-body" style="font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 12.5px; line-height: 2.2; background: #1a1b26; color: #a9b1d6; padding: 1.5rem 2rem; border-radius: 8px; overflow-x: auto;">
+    <div style="white-space: pre; min-width: 150ch;">
+<span style="color:#6a6e82; opacity:0.4;">L1</span>  <span style="color:#1a8a6a;">━━</span>  <span style="color:#1c3d7a;">⬢</span> <span style="background: linear-gradient(90deg, #1a8a6a, #1c3d7a, #583090); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Claude Opus 4.6</span>  <span style="color:#1a8a6a;">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>  <span style="color:#6a6e82;">v2.1.79</span>  <span style="color:#6a6e82;">│</span>  <span style="color:#1a8a6a;">▰ personal</span>  <span style="color:#583090;">━━</span>
+<span style="color:#6a6e82; opacity:0.4;">L2</span>  <span style="color:#1a8a6a;">▰</span> <span style="color:#6a6e82;">5h</span>   <span style="color:#1a8a6a;">▲▼▲▼</span><span style="color:#40465a;">△▽△▽</span>   <span style="color:#1a8a6a;">27%</span>  <span style="color:#6a6e82;">(3h 59m)</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">▰</span> <span style="color:#6a6e82;">7d</span>   <span style="color:#a0a4b8;">▲▼▲▼</span><span style="color:#40465a;">△▽△▽</span>   <span style="color:#a0a4b8;">52%</span>  <span style="color:#6a6e82;">(4d 18h)</span>   <span style="color:#6a6e82;">──────────</span>   <span style="color:#a0a4b8;">~18 t/s</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#d0b850;">$0.42</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">12m</span>
+<span style="color:#6a6e82; opacity:0.4;">L3</span>  <span style="color:#1e8898;">▰</span> <span style="color:#6a6e82;">ctx</span>  <span style="color:#1e8898;">▲▼▲▼▲</span><span style="color:#40465a;">△▽△</span>   <span style="color:#1e8898;">64%</span>  <span style="color:#6a6e82;">(114k / 200k)</span>   <span style="color:#1e8898;">C</span><span style="color:#1e8898;">⧈</span> <span style="color:#1e8898;">80k</span>   <span style="color:#d0b850;">W</span><span style="color:#d0b850;">□</span> <span style="color:#d0b850;">12k</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#6a6e82;">42k in</span>  <span style="color:#6a6e82;">8k out</span>   <span style="color:#6a6e82;">──────────────────────</span>   <span style="color:#1a8a6a;">◇ 5</span>
+<span style="color:#6a6e82; opacity:0.4;">L4</span>  <span style="color:#1c3d7a;">◈</span> <span style="color:#1c3d7a;">feat/issue-4-statusline-v2</span>   <span style="color:#d0b850;">↑2</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">wt:review-fix</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1a8a6a;">+34</span> <span style="color:#c04050;">-12</span>   <span style="color:#6a6e82;">──────────────────────────────────</span>   <span style="color:#1e8898;">◈ 3</span>
+    </div>
+  </div>
+</div>
+
+<h3 style="margin-top: 2rem;">Line-by-Line Breakdown</h3>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+  <div style="background: rgba(26,138,106,0.06); border: 1px solid rgba(26,138,106,0.15); border-radius: 8px; padding: 1rem;">
+    <h4 style="color: #1a8a6a; margin: 0 0 0.5rem;">L1 — Brand Identity</h4>
+    <div style="font-size: 0.85em; color: #a9b1d6; line-height: 1.6;">
+      Model badge + name (gradient animated)<br>
+      Gradient bridge (fills remaining space)<br>
+      CLI version (muted, right side)<br>
+      Account email (emerald/orange by account)<br>
+      <span style="color:#6a6e82;">Removed from L1: dir, branch (moved to L4)</span>
+    </div>
+  </div>
+  <div style="background: rgba(160,164,184,0.06); border: 1px solid rgba(160,164,184,0.15); border-radius: 8px; padding: 1rem;">
+    <h4 style="color: #a0a4b8; margin: 0 0 0.5rem;">L2 — Usage + Session</h4>
+    <div style="font-size: 0.85em; color: #a9b1d6; line-height: 1.6;">
+      5h bar + % + reset countdown<br>
+      7d bar + % + reset countdown<br>
+      Token speed (~Nt/s)<br>
+      Session cost ($X.XX SGD)<br>
+      Session uptime (Xm / Xhr Ym)
+    </div>
+  </div>
+  <div style="background: rgba(30,136,152,0.06); border: 1px solid rgba(30,136,152,0.15); border-radius: 8px; padding: 1rem;">
+    <h4 style="color: #1e8898; margin: 0 0 0.5rem;">L3 — Context Window</h4>
+    <div style="font-size: 0.85em; color: #a9b1d6; line-height: 1.6;">
+      Context bar + % + token ratio<br>
+      Cache read (C⧈ Nk) + write (W□ Nk)<br>
+      Token counts (Nk in / Nk out)<br>
+      Handoff warning (when ctx >= 100k)<br>
+      Inbox depth (◇ N)
+    </div>
+  </div>
+  <div style="background: rgba(28,61,122,0.06); border: 1px solid rgba(28,61,122,0.15); border-radius: 8px; padding: 1rem;">
+    <h4 style="color: #1c3d7a; margin: 0 0 0.5rem;">L4 — Git State</h4>
+    <div style="font-size: 0.85em; color: #a9b1d6; line-height: 1.6;">
+      Branch name (OSC 8 clickable)<br>
+      Unsynced commits (↑N)<br>
+      Worktree name (when active)<br>
+      Git changes (+N -M)<br>
+      Open issues (◈ N, OSC 8 clickable)
+    </div>
+  </div>
+</div>
+
+<h3 style="margin-top: 2rem;">Open Questions</h3>
+<div style="background: rgba(208,184,80,0.06); border: 1px solid rgba(208,184,80,0.15); border-radius: 8px; padding: 1rem; font-size: 0.85em; color: #a9b1d6; line-height: 1.8;">
+  1. <strong>CWD display</strong> — currently <code>Claude/statusline</code> is on L1. With branch on L4, should CWD stay on L1 or move to L4 next to branch?<br>
+  2. <strong>Token counts vs cache</strong> — is <code>42k in / 8k out</code> (total session I/O) worth showing alongside cache breakdown, or is it redundant?<br>
+  3. <strong>L4 bridge style</strong> — should L4 use <code>──</code> (thin dash, like L2/L3) or <code>━━</code> (thick dash, like L1) or something else to give it its own character?
+</div>

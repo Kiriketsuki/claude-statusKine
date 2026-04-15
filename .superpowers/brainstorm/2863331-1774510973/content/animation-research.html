@@ -1,0 +1,89 @@
+<h2>Statusline Animation Research</h2>
+<p class="subtitle">What we found across docs, GitHub, and the community</p>
+
+<div class="section">
+  <h3>The Core Constraint</h3>
+  <div class="mockup">
+    <div class="mockup-header">Claude Code Statusline Refresh Triggers (Official Docs)</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 13px; line-height: 1.8;">
+      <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
+        <span style="background: #1a8a6a; color: white; padding: 2px 8px; border-radius: 4px;">1</span>
+        <span>After each new <strong>assistant message</strong></span>
+      </div>
+      <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
+        <span style="background: #1c3d7a; color: white; padding: 2px 8px; border-radius: 4px;">2</span>
+        <span>When <strong>permission mode</strong> changes</span>
+      </div>
+      <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
+        <span style="background: #583090; color: white; padding: 2px 8px; border-radius: 4px;">3</span>
+        <span>When <strong>vim mode</strong> toggles</span>
+      </div>
+      <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
+        <span style="background: #6a6e82; color: white; padding: 2px 8px; border-radius: 4px;">~</span>
+        <span>Debounced at <strong>300ms</strong> (rapid changes batch)</span>
+      </div>
+      <div style="margin-top: 16px; padding: 12px; background: rgba(192,64,80,0.15); border-left: 3px solid #c04050; border-radius: 4px;">
+        <strong>No timer/interval/cron support.</strong> The statusline is strictly event-driven.
+        There is no <code>refreshIntervalSeconds</code> config key.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Open Feature Request</h3>
+  <div style="padding: 16px; background: rgba(26,138,106,0.1); border: 1px solid rgba(26,138,106,0.3); border-radius: 8px;">
+    <div style="font-size: 14px; font-weight: bold;">
+      <a href="https://github.com/anthropics/claude-code/issues/5685" target="_blank" style="color: #1a8a6a;">
+        anthropics/claude-code#5685
+      </a>
+      &mdash; "Feature Request - refresh status line on an interval"
+    </div>
+    <div style="margin-top: 8px; color: #a0a4b8; font-size: 13px;">
+      Status: <span style="background: #1a8a6a; color: white; padding: 1px 6px; border-radius: 3px; font-size: 11px;">OPEN</span>
+      &nbsp;&bull;&nbsp; 13 comments
+    </div>
+    <div style="margin-top: 8px; font-size: 13px;">
+      Proposes: <code>"refreshIntervalSeconds": 30</code> in statusLine config.
+      <br>Community wants this for live PR status, timer updates, and animations.
+    </div>
+    <div style="margin-top: 8px; font-size: 12px; color: #6a6e82;">
+      <strong>sirmalloc</strong> (ccstatusline author): "v1.0.88 runs the statusline constantly
+      (I was even able to play a movie in it), but this has definite performance impacts"
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>What Other Statuslines Do</h3>
+  <div style="display: grid; gap: 12px;">
+    <div style="padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+      <strong>ccstatusline</strong> (sirmalloc) &mdash; No animation. Static renders with powerline glyphs. TUI config. 2.2k+ npm downloads.
+    </div>
+    <div style="padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+      <strong>CCometixLine</strong> (Haleclipse) &mdash; Rust-based. No animation. Focus on performance.
+    </div>
+    <div style="padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+      <strong>claude-code-statusline</strong> (levz0r) &mdash; No animation. Token tracking + cost.
+    </div>
+    <div style="padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+      <strong>Yours (Chrysaki)</strong> &mdash; <em>The only one with time-based animation logic</em> (grad_phase, wave_shift, badge_tick, pulse_scale, bridge_rot). But it only advances between renders.
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Bonus Discovery: Native Rate Limits</h3>
+  <div style="padding: 12px; background: rgba(208,184,80,0.1); border: 1px solid rgba(208,184,80,0.3); border-radius: 6px;">
+    <strong>Claude Code now sends rate limit data natively in the statusline JSON!</strong>
+    <div style="margin-top: 8px; font-family: monospace; font-size: 12px; line-height: 1.6;">
+      <code>rate_limits.five_hour.used_percentage</code> (0-100)<br>
+      <code>rate_limits.seven_day.used_percentage</code> (0-100)<br>
+      <code>rate_limits.five_hour.resets_at</code> (Unix epoch seconds)<br>
+      <code>rate_limits.seven_day.resets_at</code> (Unix epoch seconds)
+    </div>
+    <div style="margin-top: 8px; font-size: 13px;">
+      This could replace your <code>fetch-usage.sh</code> entirely &mdash; no more OAuth token caching, background fetching, or credential file parsing.
+    </div>
+  </div>
+</div>

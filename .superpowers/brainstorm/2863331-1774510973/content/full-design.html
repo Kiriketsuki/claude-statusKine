@@ -1,0 +1,186 @@
+<h2>Full Design: Statusline v2.1</h2>
+<p class="subtitle">Three workstreams -- animation prep, native rate limits, visual polish</p>
+
+<!-- ============================================================ -->
+<div class="section">
+  <h3>Workstream 1: Animation System (future-ready)</h3>
+  <p style="font-size: 13px; color: #a0a4b8;">
+    Design the phase system so it animates smoothly when <code>refreshIntervalSeconds</code> lands.
+    Until then, each render picks a visually distinct static frame.
+  </p>
+
+  <div style="display: grid; gap: 12px; margin-top: 12px;">
+    <div style="padding: 12px; background: rgba(26,138,106,0.08); border: 1px solid rgba(26,138,106,0.25); border-radius: 6px;">
+      <strong>Keep all existing phase variables</strong> (<code>grad_phase</code>, <code>wave_shift</code>, <code>badge_tick</code>, <code>pulse_scale</code>, <code>_bridge_rot</code>)
+      <div style="font-size: 12px; color: #6a6e82; margin-top: 4px;">
+        They still drive wave bars, badge pulse, and bridge colour rotation.
+        Only gradient rendering is removed -- the phase math stays.
+      </div>
+    </div>
+    <div style="padding: 12px; background: rgba(26,138,106,0.08); border: 1px solid rgba(26,138,106,0.25); border-radius: 6px;">
+      <strong>Add <code>_jewel_seed</code></strong> -- timestamp-derived seed for the 9-colour jewel pool
+      <div style="font-size: 12px; color: #6a6e82; margin-top: 4px;">
+        <code>_jewel_seed=$(date +%s)</code><br>
+        Each line picks its colour via: <code>JEWEL_COLORS[(_jewel_seed / P) % 9]</code> where P is a different prime per line (1, 3, 7, 11).
+        This ensures colours shift on every render and no two adjacent lines share a colour.
+      </div>
+    </div>
+    <div style="padding: 12px; background: rgba(26,138,106,0.08); border: 1px solid rgba(26,138,106,0.25); border-radius: 6px;">
+      <strong>Remove <code>gradient_text()</code> and <code>gradient_text_off()</code></strong>
+      <div style="font-size: 12px; color: #6a6e82; margin-top: 4px;">
+        ~65 lines of per-character colour interpolation code deleted.
+        Replaced by simple <code>printf "%b%s%b" "$colour" "$text" "$R"</code> calls.
+      </div>
+    </div>
+    <div style="padding: 12px; background: rgba(208,184,80,0.08); border: 1px solid rgba(208,184,80,0.25); border-radius: 6px;">
+      <strong>Future: re-add gradient as an animation mode</strong>
+      <div style="font-size: 12px; color: #6a6e82; margin-top: 4px;">
+        When <code>refreshIntervalSeconds</code> ships, add back gradient rendering behind a
+        <code>CHRYSAKI_ANIMATE=1</code> flag. The phase math is already there -- just wire it
+        to a new <code>animated_gradient_text()</code> that only activates at &gt;=2fps refresh.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<div class="section">
+  <h3>Workstream 3: Migrate to Native Rate Limits</h3>
+  <p style="font-size: 13px; color: #a0a4b8;">
+    Claude Code now sends rate limit data in the statusline JSON. Drop the background fetcher.
+  </p>
+
+  <div class="mockup">
+    <div class="mockup-header">Data Source Migration</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 12px; line-height: 1.8;">
+      <div style="margin-bottom: 12px;">
+        <span style="color: #c04050; text-decoration: line-through;">OLD: fetch-usage.sh &rarr; OAuth API &rarr; /tmp/.claude_usage_cache</span>
+      </div>
+      <div style="color: #1a8a6a;">
+        NEW: JSON stdin &rarr; rate_limits.five_hour / rate_limits.seven_day
+      </div>
+      <div style="margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px;">
+        <strong>Fields available:</strong><br>
+        <span style="color: #1e8898;">rate_limits.five_hour.used_percentage</span> &rarr; replaces five_h (0-100)<br>
+        <span style="color: #1e8898;">rate_limits.five_hour.resets_at</span> &rarr; replaces five_h_reset (Unix epoch)<br>
+        <span style="color: #1e8898;">rate_limits.seven_day.used_percentage</span> &rarr; replaces seven_d (0-100)<br>
+        <span style="color: #1e8898;">rate_limits.seven_day.resets_at</span> &rarr; replaces seven_d_reset (Unix epoch)
+      </div>
+    </div>
+  </div>
+
+  <div style="display: grid; gap: 12px; margin-top: 12px;">
+    <div style="padding: 12px; background: rgba(192,64,80,0.08); border: 1px solid rgba(192,64,80,0.25); border-radius: 6px;">
+      <strong>Delete:</strong>
+      <ul style="margin: 6px 0 0 16px; font-size: 13px;">
+        <li><code>fetch-usage.sh</code> -- entire file</li>
+        <li>OAuth token caching logic (<code>/tmp/.claude_token_cache</code>)</li>
+        <li>Per-account usage cache (<code>/tmp/.claude_usage_cache_*</code>)</li>
+        <li>Background fetch trigger in <code>statusline-command.sh</code> (line 115)</li>
+        <li>Account config dir resolution for usage cache (lines 94-116)</li>
+      </ul>
+    </div>
+    <div style="padding: 12px; background: rgba(26,138,106,0.08); border: 1px solid rgba(26,138,106,0.25); border-radius: 6px;">
+      <strong>Replace with:</strong>
+      <div style="font-family: monospace; font-size: 11px; margin-top: 6px; line-height: 1.6; color: #a0a4b8;">
+        five_h=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty' | cut -d. -f1)<br>
+        seven_d=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty' | cut -d. -f1)<br>
+        five_h_reset_epoch=$(echo "$input" | jq -r '.rate_limits.five_hour.resets_at // empty')<br>
+        seven_d_reset_epoch=$(echo "$input" | jq -r '.rate_limits.seven_day.resets_at // empty')
+      </div>
+    </div>
+    <div style="padding: 12px; background: rgba(208,184,80,0.08); border: 1px solid rgba(208,184,80,0.25); border-radius: 6px;">
+      <strong>Simplify <code>compute_delta()</code>:</strong> receives Unix epoch directly instead of ISO 8601.
+      No more date parsing -- just <code>diff=$(( reset_epoch - now_epoch ))</code>.
+    </div>
+    <div style="padding: 12px; background: rgba(26,138,106,0.08); border: 1px solid rgba(26,138,106,0.25); border-radius: 6px;">
+      <strong>Keep account config resolution for:</strong> email display and <code>fetch-stats.sh</code> (issues/PR).
+      Only the usage-specific code is removed.
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<div class="section">
+  <h3>Workstream 2: Visual Polish</h3>
+
+  <div style="display: grid; gap: 16px; margin-top: 12px;">
+
+    <!-- +0 -0 fix -->
+    <div style="padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+      <strong>Fix: Show <code>+0 -0</code> when no changes</strong>
+      <div style="margin-top: 8px; font-family: monospace; font-size: 13px; display: grid; gap: 6px;">
+        <div style="padding: 8px; background: #0d1117; border-radius: 4px;">
+          <span style="color: #c04050; text-decoration: line-through;">Before:</span>
+          <span style="color: #6a6e82;"> ⊙ 7fba851</span><span style="color: #40465a;">   ──────   </span><span style="color: #6a6e82;">(blank)</span><span style="color: #40465a;">   ──────   </span><span style="color: rgb(255,165,0);">0 unstaged</span>
+        </div>
+        <div style="padding: 8px; background: #0d1117; border-radius: 4px;">
+          <span style="color: #1a8a6a;">After: </span>
+          <span style="color: #6a6e82;"> ⊙ 7fba851</span><span style="color: #40465a;">   ──────   </span><span style="color: #6a6e82;">+0 -0</span><span style="color: #40465a;">   ──────   </span><span style="color: rgb(255,165,0);">0 unstaged</span>
+        </div>
+      </div>
+      <div style="font-size: 12px; color: #6a6e82; margin-top: 6px;">
+        Changes column always shows <code>+N -M</code> in muted colour when both are zero.
+        Column width becomes consistent -- no layout shift.
+      </div>
+    </div>
+
+    <!-- Line 1 solid colours -->
+    <div style="padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+      <strong>Line 1: Solid colours replace gradient</strong>
+      <div style="margin-top: 8px; font-family: monospace; font-size: 13px;">
+        <div style="padding: 8px; background: #0d1117; border-radius: 4px; white-space: pre; overflow-x: auto;">
+<span style="font-weight:bold; color: rgb(26,138,106);"> ━━  ⬢ Claude Opus 4.6 (1M context)</span><span style="color: rgb(43,55,128);">   ━━━━━━━━━━━━━━━━━━━   </span><span style="font-weight:bold; color: rgb(160,164,184);">v2.1.84</span><span style="color: rgb(70,72,136);">   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   </span><span style="font-weight:bold; color: rgb(26,138,106);">Claude/statusline</span><span style="color: rgb(88,48,144);">   ━   </span><span style="color: rgb(26,138,106);">kiriketsuki@gmail.com</span><span style="color: rgb(58,48,133);"> ━━━━━━</span></div>
+      </div>
+      <div style="font-size: 12px; color: #6a6e82; margin-top: 6px;">
+        Model + badge: Emerald Lt (brand identity). Version: Secondary. CWD + email: existing colours.
+        Bridges: random jewel tones from 9-colour pool, different per segment.
+      </div>
+    </div>
+
+    <!-- Line 4 branch -->
+    <div style="padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+      <strong>Line 4 branch: Solid jewel tone replaces gradient</strong>
+      <div style="margin-top: 8px; font-family: monospace; font-size: 13px;">
+        <div style="padding: 8px; background: #0d1117; border-radius: 4px; white-space: pre;">
+<span style="color:#6a6e82;"> ⎇ </span><span style="font-weight:bold; color: rgb(27,99,114);">feat/issue-4-statusline-v2</span><span style="color: rgb(50,96,126);">   ────   </span><span style="color: #6a6e82;">⊙ 7fba851</span><span style="color: rgb(50,96,126);">   ────   </span><span style="color: #6a6e82;">+0 -0</span></div>
+      </div>
+    </div>
+
+    <!-- Bridge expansion -->
+    <div style="padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+      <strong>All bridges: 9-colour pool replaces 3-colour rotation</strong>
+      <div style="font-size: 12px; color: #6a6e82; margin-top: 6px;">
+        <code>_BR_COLORS</code> array expands from 3 to 9 entries.
+        <code>_bridge_rot</code> becomes <code>_jewel_seed</code>-based with prime divisors per line.
+        Each render, every line's bridges are a different jewel tone. Colours shift on each re-render.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<div class="section">
+  <h3>Summary of Changes</h3>
+  <div style="font-size: 13px; line-height: 1.8;">
+    <table style="width: 100%; border-collapse: collapse;">
+      <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <th style="text-align: left; padding: 6px 8px; color: #a0a4b8;">File</th>
+        <th style="text-align: left; padding: 6px 8px; color: #a0a4b8;">Action</th>
+      </tr>
+      <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+        <td style="padding: 6px 8px; font-family: monospace; font-size: 12px;">statusline-command.sh</td>
+        <td style="padding: 6px 8px;">Remove gradient functions, add 9-colour jewel pool, migrate to native rate limits, add +0 -0 fallback, simplify compute_delta</td>
+      </tr>
+      <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+        <td style="padding: 6px 8px; font-family: monospace; font-size: 12px;">fetch-usage.sh</td>
+        <td style="padding: 6px 8px; color: #c04050;">Delete entirely</td>
+      </tr>
+      <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+        <td style="padding: 6px 8px; font-family: monospace; font-size: 12px;">CLAUDE.md</td>
+        <td style="padding: 6px 8px;">Update architecture docs (remove fetch-usage references, document jewel pool)</td>
+      </tr>
+    </table>
+  </div>
+</div>

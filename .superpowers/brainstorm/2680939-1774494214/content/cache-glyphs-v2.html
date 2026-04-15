@@ -1,0 +1,46 @@
+<h2>Cache Glyphs v2 — Symmetric Pairs + Letters</h2>
+<p class="subtitle">Same base shape, two variants. C = cache read (retrieved), W = cache write (created). No emojis — all single-width Unicode geometric glyphs.</p>
+
+<h3>Filled / Outline Pairs</h3>
+<p style="color: #6a6e82; font-size: 0.9em;">Filled = retrieved (full, complete), Outline = written (being formed). Same shape family, two states.</p>
+
+<div style="font-family: 'JetBrains Mono', 'Fira Code', monospace; background: #1a1b26; color: #a9b1d6; padding: 1.5rem; border-radius: 8px; font-size: 13px; line-height: 2.4;">
+  <div><span style="color:#6a6e82;">Diamond pair:</span>      <span style="color:#1e8898;">C</span><span style="color:#1e8898;">&#x25C6;</span><span style="color:#1e8898;">80k</span>  <span style="color:#d0b850;">W</span><span style="color:#d0b850;">&#x25C7;</span><span style="color:#d0b850;">12k</span></div>
+  <div><span style="color:#6a6e82;">Circle pair:</span>       <span style="color:#1e8898;">C</span><span style="color:#1e8898;">&#x25CF;</span><span style="color:#1e8898;">80k</span>  <span style="color:#d0b850;">W</span><span style="color:#d0b850;">&#x25CB;</span><span style="color:#d0b850;">12k</span></div>
+  <div><span style="color:#6a6e82;">Square pair:</span>       <span style="color:#1e8898;">C</span><span style="color:#1e8898;">&#x25A0;</span><span style="color:#1e8898;">80k</span>  <span style="color:#d0b850;">W</span><span style="color:#d0b850;">&#x25A1;</span><span style="color:#d0b850;">12k</span></div>
+  <div><span style="color:#6a6e82;">Hexagon pair:</span>      <span style="color:#1e8898;">C</span><span style="color:#1e8898;">&#x2B22;</span><span style="color:#1e8898;">80k</span>  <span style="color:#d0b850;">W</span><span style="color:#d0b850;">&#x2B21;</span><span style="color:#d0b850;">12k</span></div>
+  <div><span style="color:#6a6e82;">Triangle pair:</span>     <span style="color:#1e8898;">C</span><span style="color:#1e8898;">&#x25B2;</span><span style="color:#1e8898;">80k</span>  <span style="color:#d0b850;">W</span><span style="color:#d0b850;">&#x25B3;</span><span style="color:#d0b850;">12k</span></div>
+  <div><span style="color:#6a6e82;">Star pair:</span>         <span style="color:#1e8898;">C</span><span style="color:#1e8898;">&#x2605;</span><span style="color:#1e8898;">80k</span>  <span style="color:#d0b850;">W</span><span style="color:#d0b850;">&#x2606;</span><span style="color:#d0b850;">12k</span></div>
+</div>
+
+<h3 style="margin-top: 2rem;">Directional Pairs</h3>
+<p style="color: #6a6e82; font-size: 0.9em;">Same glyph, opposite direction. Read = inward/down (pulling from store), Write = outward/up (depositing).</p>
+
+<div style="font-family: 'JetBrains Mono', 'Fira Code', monospace; background: #1a1b26; color: #a9b1d6; padding: 1.5rem; border-radius: 8px; font-size: 13px; line-height: 2.4;">
+  <div><span style="color:#6a6e82;">Chevron pair:</span>     <span style="color:#1e8898;">C</span><span style="color:#1e8898;">&#x25B8;</span><span style="color:#1e8898;">80k</span>  <span style="color:#d0b850;">W</span><span style="color:#d0b850;">&#x25C2;</span><span style="color:#d0b850;">12k</span>     <span style="color:#6a6e82;">// out from cache, in to cache</span></div>
+  <div><span style="color:#6a6e82;">Arrow pair:</span>       <span style="color:#1e8898;">C</span><span style="color:#1e8898;">&#x25B6;</span><span style="color:#1e8898;">80k</span>  <span style="color:#d0b850;">W</span><span style="color:#d0b850;">&#x25C0;</span><span style="color:#d0b850;">12k</span>     <span style="color:#6a6e82;">// larger variant</span></div>
+  <div><span style="color:#6a6e82;">Up/Down tri:</span>      <span style="color:#1e8898;">C</span><span style="color:#1e8898;">&#x25B4;</span><span style="color:#1e8898;">80k</span>  <span style="color:#d0b850;">W</span><span style="color:#d0b850;">&#x25BE;</span><span style="color:#d0b850;">12k</span>     <span style="color:#6a6e82;">// lift out, push down</span></div>
+</div>
+
+<h3 style="margin-top: 2rem;">Contained / Open Pairs</h3>
+<p style="color: #6a6e82; font-size: 0.9em;">Read = something contained (vault, stored), Write = something being added/expanding.</p>
+
+<div style="font-family: 'JetBrains Mono', 'Fira Code', monospace; background: #1a1b26; color: #a9b1d6; padding: 1.5rem; border-radius: 8px; font-size: 13px; line-height: 2.4;">
+  <div><span style="color:#6a6e82;">Dot-in-diamond:</span>   <span style="color:#1e8898;">C</span><span style="color:#1e8898;">&#x25C8;</span><span style="color:#1e8898;">80k</span>  <span style="color:#d0b850;">W</span><span style="color:#d0b850;">&#x25C7;</span><span style="color:#d0b850;">12k</span>     <span style="color:#6a6e82;">// full vault vs empty mold</span></div>
+  <div><span style="color:#6a6e82;">Dot-in-circle:</span>    <span style="color:#1e8898;">C</span><span style="color:#1e8898;">&#x25C9;</span><span style="color:#1e8898;">80k</span>  <span style="color:#d0b850;">W</span><span style="color:#d0b850;">&#x25CB;</span><span style="color:#d0b850;">12k</span>     <span style="color:#6a6e82;">// bullseye vs empty ring</span></div>
+  <div><span style="color:#6a6e82;">Nested square:</span>    <span style="color:#1e8898;">C</span><span style="color:#1e8898;">&#x29C8;</span><span style="color:#1e8898;">80k</span>  <span style="color:#d0b850;">W</span><span style="color:#d0b850;">&#x25A1;</span><span style="color:#d0b850;">12k</span>     <span style="color:#6a6e82;">// box-in-box vs empty box</span></div>
+</div>
+
+<h3 style="margin-top: 2rem;">In Full Line Context</h3>
+<p style="color: #6a6e82; font-size: 0.9em;">Top 3 candidates shown inside the actual Line 3 layout:</p>
+
+<div style="font-family: 'JetBrains Mono', 'Fira Code', monospace; background: #1a1b26; color: #a9b1d6; padding: 1.5rem; border-radius: 8px; font-size: 13px; line-height: 2.4;">
+  <div style="color:#6a6e82; margin-bottom: 0.5rem;">── Diamond ──</div>
+  <div><span style="color:#1e8898;">&#x25B0;</span> <span style="color:#6a6e82;">ctx</span>  <span style="color:#1e8898;">&#x25B2;&#x25BC;&#x25B2;&#x25BC;&#x25B2;</span><span style="color:#40465a;">&#x25B3;&#x25BD;&#x25B3;</span>  <span style="color:#1e8898;">64%</span>  <span style="color:#6a6e82;">(114k/200k)</span>  <span style="color:#1e8898;">C</span><span style="color:#1e8898;">&#x25C6;</span><span style="color:#1e8898;">80k</span> <span style="color:#d0b850;">W</span><span style="color:#d0b850;">&#x25C7;</span><span style="color:#d0b850;">12k</span>  <span style="color:#6a6e82;">&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;</span>  <span style="color:#a0a4b8;">12m</span>  <span style="color:#6a6e82;">&#x2502;</span>  <span style="color:#1a8a6a;">&#x25C7; 5</span></div>
+
+  <div style="color:#6a6e82; margin-top: 1rem; margin-bottom: 0.5rem;">── Hexagon ──</div>
+  <div><span style="color:#1e8898;">&#x25B0;</span> <span style="color:#6a6e82;">ctx</span>  <span style="color:#1e8898;">&#x25B2;&#x25BC;&#x25B2;&#x25BC;&#x25B2;</span><span style="color:#40465a;">&#x25B3;&#x25BD;&#x25B3;</span>  <span style="color:#1e8898;">64%</span>  <span style="color:#6a6e82;">(114k/200k)</span>  <span style="color:#1e8898;">C</span><span style="color:#1e8898;">&#x2B22;</span><span style="color:#1e8898;">80k</span> <span style="color:#d0b850;">W</span><span style="color:#d0b850;">&#x2B21;</span><span style="color:#d0b850;">12k</span>  <span style="color:#6a6e82;">&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;</span>  <span style="color:#a0a4b8;">12m</span>  <span style="color:#6a6e82;">&#x2502;</span>  <span style="color:#1a8a6a;">&#x25C7; 5</span></div>
+
+  <div style="color:#6a6e82; margin-top: 1rem; margin-bottom: 0.5rem;">── Dot-in-diamond ──</div>
+  <div><span style="color:#1e8898;">&#x25B0;</span> <span style="color:#6a6e82;">ctx</span>  <span style="color:#1e8898;">&#x25B2;&#x25BC;&#x25B2;&#x25BC;&#x25B2;</span><span style="color:#40465a;">&#x25B3;&#x25BD;&#x25B3;</span>  <span style="color:#1e8898;">64%</span>  <span style="color:#6a6e82;">(114k/200k)</span>  <span style="color:#1e8898;">C</span><span style="color:#1e8898;">&#x25C8;</span><span style="color:#1e8898;">80k</span> <span style="color:#d0b850;">W</span><span style="color:#d0b850;">&#x25C7;</span><span style="color:#d0b850;">12k</span>  <span style="color:#6a6e82;">&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;</span>  <span style="color:#a0a4b8;">12m</span>  <span style="color:#6a6e82;">&#x2502;</span>  <span style="color:#1a8a6a;">&#x25C7; 5</span></div>
+</div>

@@ -1,0 +1,126 @@
+<h2>Cache Glyph Explorer</h2>
+<p class="subtitle">Mix and match glyphs for cache read (reused from vault) and cache write (freshly stored). Click pairs that feel right.</p>
+
+<h3>Cache Read — "pulled from the vault"</h3>
+<p style="color: #6a6e82; font-size: 0.9em;">These tokens were already cached and reused. The vibe: retrieval, unlocking, flowing out.</p>
+
+<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin: 1rem 0; font-family: 'JetBrains Mono', monospace;">
+
+  <div class="option" data-choice="read-vault" onclick="toggleSelect(this)" style="text-align:center; padding: 1rem;">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#x1F512;</div>
+    <div class="letter" style="font-size: 0.8em;">Vault/Lock</div>
+    <code style="color: #1e8898;">&#x1F512; 80k</code>
+  </div>
+
+  <div class="option" data-choice="read-key" onclick="toggleSelect(this)" style="text-align:center; padding: 1rem;">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#x2623;</div>
+    <div class="letter" style="font-size: 0.8em;">Biohazard (nah)</div>
+    <code style="color: #1e8898;">&#x2623; 80k</code>
+  </div>
+
+  <div class="option" data-choice="read-shield" onclick="toggleSelect(this)" style="text-align:center; padding: 1rem;">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#x229B;</div>
+    <div class="letter" style="font-size: 0.8em;">Circled asterisk</div>
+    <code style="color: #1e8898;">&#x229B; 80k</code>
+  </div>
+
+  <div class="option" data-choice="read-diamond-dot" onclick="toggleSelect(this)" style="text-align:center; padding: 1rem;">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#x25C8;</div>
+    <div class="letter" style="font-size: 0.8em;">Diamond with dot</div>
+    <code style="color: #1e8898;">&#x25C8; 80k</code>
+  </div>
+
+  <div class="option" data-choice="read-bank" onclick="toggleSelect(this)" style="text-align:center; padding: 1rem;">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#x1F3E6;</div>
+    <div class="letter" style="font-size: 0.8em;">Bank (emoji)</div>
+    <code style="color: #1e8898;">&#x1F3E6; 80k</code>
+  </div>
+
+  <div class="option" data-choice="read-circle-ring" onclick="toggleSelect(this)" style="text-align:center; padding: 1rem;">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#x25CE;</div>
+    <div class="letter" style="font-size: 0.8em;">Bullseye</div>
+    <code style="color: #1e8898;">&#x25CE; 80k</code>
+  </div>
+
+  <div class="option" data-choice="read-boxed" onclick="toggleSelect(this)" style="text-align:center; padding: 1rem;">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#x29C8;</div>
+    <div class="letter" style="font-size: 0.8em;">Squared square</div>
+    <code style="color: #1e8898;">&#x29C8; 80k</code>
+  </div>
+
+  <div class="option" data-choice="read-dotted-square" onclick="toggleSelect(this)" style="text-align:center; padding: 1rem;">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#x2B1A;</div>
+    <div class="letter" style="font-size: 0.8em;">Dotted square</div>
+    <code style="color: #1e8898;">&#x2B1A; 80k</code>
+  </div>
+
+</div>
+
+<h3 style="margin-top: 2rem;">Cache Write — "freshly created/stored"</h3>
+<p style="color: #6a6e82; font-size: 0.9em;">These tokens were newly written to the cache. The vibe: creation, forging, inscribing, depositing.</p>
+
+<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin: 1rem 0; font-family: 'JetBrains Mono', monospace;">
+
+  <div class="option" data-choice="write-pencil" onclick="toggleSelect(this)" style="text-align:center; padding: 1rem;">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#x270E;</div>
+    <div class="letter" style="font-size: 0.8em;">Pencil</div>
+    <code style="color: #d0b850;">&#x270E; 12k</code>
+  </div>
+
+  <div class="option" data-choice="write-spark" onclick="toggleSelect(this)" style="text-align:center; padding: 1rem;">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#x2726;</div>
+    <div class="letter" style="font-size: 0.8em;">4-point star</div>
+    <code style="color: #d0b850;">&#x2726; 12k</code>
+  </div>
+
+  <div class="option" data-choice="write-plus-square" onclick="toggleSelect(this)" style="text-align:center; padding: 1rem;">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#x229E;</div>
+    <div class="letter" style="font-size: 0.8em;">Squared plus</div>
+    <code style="color: #d0b850;">&#x229E; 12k</code>
+  </div>
+
+  <div class="option" data-choice="write-flame" onclick="toggleSelect(this)" style="text-align:center; padding: 1rem;">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#x2632;</div>
+    <div class="letter" style="font-size: 0.8em;">Trigram fire</div>
+    <code style="color: #d0b850;">&#x2632; 12k</code>
+  </div>
+
+  <div class="option" data-choice="write-hammer" onclick="toggleSelect(this)" style="text-align:center; padding: 1rem;">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#x2692;</div>
+    <div class="letter" style="font-size: 0.8em;">Hammer & pick</div>
+    <code style="color: #d0b850;">&#x2692; 12k</code>
+  </div>
+
+  <div class="option" data-choice="write-circled-plus" onclick="toggleSelect(this)" style="text-align:center; padding: 1rem;">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#x2295;</div>
+    <div class="letter" style="font-size: 0.8em;">Circled plus</div>
+    <code style="color: #d0b850;">&#x2295; 12k</code>
+  </div>
+
+  <div class="option" data-choice="write-lightning" onclick="toggleSelect(this)" style="text-align:center; padding: 1rem;">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#x26A1;</div>
+    <div class="letter" style="font-size: 0.8em;">Lightning</div>
+    <code style="color: #d0b850;">&#x26A1; 12k</code>
+  </div>
+
+  <div class="option" data-choice="write-quill" onclick="toggleSelect(this)" style="text-align:center; padding: 1rem;">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#x2710;</div>
+    <div class="letter" style="font-size: 0.8em;">Upper-right pencil</div>
+    <code style="color: #d0b850;">&#x2710; 12k</code>
+  </div>
+
+</div>
+
+<h3 style="margin-top: 2rem;">Combo Preview</h3>
+<p style="color: #6a6e82; font-size: 0.9em;">Some pairings that feel cohesive together, shown in terminal context:</p>
+
+<div style="font-family: 'JetBrains Mono', monospace; background: #1a1b26; color: #a9b1d6; padding: 1.5rem; border-radius: 8px; font-size: 13px; line-height: 2.2;">
+  <div><span style="color:#6a6e82;">Vault + Spark:</span>     <span style="color:#1e8898;">&#x25C8; 80k</span> <span style="color:#d0b850;">&#x2726; 12k</span>     <span style="color:#6a6e82;">// geometric pair, fits Chrysaki</span></div>
+  <div><span style="color:#6a6e82;">Bullseye + Plus:</span>   <span style="color:#1e8898;">&#x25CE; 80k</span> <span style="color:#d0b850;">&#x229E; 12k</span>     <span style="color:#6a6e82;">// both squared/circular, clean</span></div>
+  <div><span style="color:#6a6e82;">Squared + Spark:</span>   <span style="color:#1e8898;">&#x29C8; 80k</span> <span style="color:#d0b850;">&#x2726; 12k</span>     <span style="color:#6a6e82;">// vault box + creation spark</span></div>
+  <div><span style="color:#6a6e82;">Diamond + Pencil:</span>  <span style="color:#1e8898;">&#x25C8; 80k</span> <span style="color:#d0b850;">&#x270E; 12k</span>     <span style="color:#6a6e82;">// read from gem + write with pen</span></div>
+  <div><span style="color:#6a6e82;">Bullseye + Hammer:</span> <span style="color:#1e8898;">&#x25CE; 80k</span> <span style="color:#d0b850;">&#x2692; 12k</span>     <span style="color:#6a6e82;">// retrieve target + forge new</span></div>
+  <div><span style="color:#6a6e82;">Squared + C.Plus:</span>  <span style="color:#1e8898;">&#x29C8; 80k</span> <span style="color:#d0b850;">&#x2295; 12k</span>     <span style="color:#6a6e82;">// contained vs expanding</span></div>
+</div>
+
+<p style="color: #6a6e82; font-size: 0.85em; margin-top: 1rem;">Note: some glyphs (emojis like bank/lock) render as wide characters in terminals and may break column alignment. The geometric Unicode glyphs (rows without emoji) are safer for monospace rendering.</p>

@@ -277,21 +277,25 @@ if [ "$duration_ms" -gt 0 ] 2>/dev/null; then
   else session_clock="${_s}s"; fi
 fi
 
-# --- cache token breakdown (for L3 token groups) ---
+# --- cumulative session token totals (for L3 token groups) ---
+total_in_tokens=$(echo "$input" | jq -r '.context_window.total_input_tokens // 0' 2>/dev/null)
+# total_out_tokens already read above for tok/s
+
+# Context window breakdown (for expanded display)
 cache_read_in=$(echo "$input" | jq -r '.context_window.current_usage.cache_read_input_tokens // 0' 2>/dev/null)
 cache_create_in=$(echo "$input" | jq -r '.context_window.current_usage.cache_creation_input_tokens // 0' 2>/dev/null)
 raw_in=$(echo "$input" | jq -r '.context_window.current_usage.input_tokens // 0' 2>/dev/null)
 raw_out=$(echo "$input" | jq -r '.context_window.current_usage.output_tokens // 0' 2>/dev/null)
 
-# Format token counts for display (Nk)
+# Format token counts for display
 _fmt_k() { echo $(( $1 / 1000 ))k; }
 cache_read_in_k=$(_fmt_k "$cache_read_in")
 cache_create_in_k=$(_fmt_k "$cache_create_in")
 raw_in_k=$(_fmt_k "$raw_in")
 raw_out_k=$(_fmt_k "$raw_out")
-# Compact mode totals
-total_in_k=$(_fmt_k $(( cache_read_in + raw_in )))
-total_out_k=$(_fmt_k $(( cache_create_in + raw_out )))
+# Cumulative session totals
+total_in_k=$(_fmt_k "$total_in_tokens")
+total_out_k=$(_fmt_k "$total_out_tokens")
 
 # --- Chrysaki colour palette ---
 if [ "$NO_COLOUR" -eq 1 ]; then
@@ -1016,11 +1020,13 @@ if [ -n "$branch" ]; then
 fi
 
 # --- cost cache: written each render for Stop hook export-cost.sh ---
+# Keyed by session ID so concurrent sessions don't clobber each other.
 _session_id=$(echo "$input" | jq -r '.session_id // empty' 2>/dev/null)
-_cost_cache="/tmp/.chrysaki_cost_cache"
-_cost_tmp="${_cost_cache}.$$"
-printf "%s\n%s\n%s\n%s\n%s\n%s\n" \
+_session_short="${_session_id:0:8}"
+_cost_cache="/tmp/.chrysaki_cost_cache.${_session_short:-$$}"
+_cost_tmp="${_cost_cache}.tmp"
+printf "%s\n%s\n%s\n%s\n%s\n%s\n%s\n" \
   "$model" "$cost_usd" "$cost_sgd" "$session_clock" \
-  "$_session_id" "$dir" > "$_cost_tmp"
+  "$_session_id" "$dir" "$(date '+%Y-%m-%d %H:%M:%S')" > "$_cost_tmp"
 mv -f "$_cost_tmp" "$_cost_cache"
 chmod 600 "$_cost_cache" 2>/dev/null

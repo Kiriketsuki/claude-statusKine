@@ -1,0 +1,78 @@
+<h2>Token Display — Final Format</h2>
+<p class="subtitle">Symmetric in/out groups with c⧈ (cached) and r□/w□ (raw/written) glyphs.</p>
+
+<h3>The Format</h3>
+<div style="font-family: 'JetBrains Mono', 'Fira Code', monospace; background: #1a1b26; color: #a9b1d6; padding: 1.5rem 2rem; border-radius: 8px; font-size: 13px; line-height: 2.4; overflow-x: auto;">
+  <div style="white-space: pre;">
+<span style="color:#1e8898;">in</span>  <span style="color:#1e8898;">c⧈</span> <span style="color:#1e8898;">120k</span>  <span style="color:#1e8898;">r□</span> <span style="color:#1e8898;">10k</span>  <span style="color:#6a6e82;">//</span>  <span style="color:#d0b850;">out</span>  <span style="color:#d0b850;">c⧈</span> <span style="color:#d0b850;">84k</span>  <span style="color:#d0b850;">w□</span> <span style="color:#d0b850;">190k</span>
+
+<span style="color:#6a6e82;">│    │       │           │       │</span>
+<span style="color:#6a6e82;">│    │       │           │       └─ output_tokens (model generation)</span>
+<span style="color:#6a6e82;">│    │       │           └─ cache_creation_input_tokens (newly stored)</span>
+<span style="color:#6a6e82;">│    │       └─ input_tokens (fresh, uncached)</span>
+<span style="color:#6a6e82;">│    └─ cache_read_input_tokens (reused from vault)</span>
+<span style="color:#6a6e82;">│</span>
+<span style="color:#6a6e82;">c⧈ = cached (nested square = vault)</span>
+<span style="color:#6a6e82;">r□ = raw input    w□ = written output</span>
+  </div>
+</div>
+
+<h3 style="margin-top: 2rem;">Complete 4-Line Layout</h3>
+
+<div class="mockup">
+  <div class="mockup-header">Chrysaki V2 — Normal State</div>
+  <div class="mockup-body" style="font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 12.5px; line-height: 2.2; background: #1a1b26; color: #a9b1d6; padding: 1.5rem 2rem; border-radius: 8px; overflow-x: auto;">
+    <div style="white-space: pre; min-width: 155ch;">
+<span style="color:#1a8a6a;">━━</span>  <span style="color:#1c3d7a;">⬢</span> <span style="background: linear-gradient(90deg, #1a8a6a, #1c3d7a, #583090); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Claude Opus 4.6</span>  <span style="color:#1a8a6a;">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>  <span style="color:#583090;">Claude/statusline</span>   <span style="color:#6a6e82;">v2.1.79</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1a8a6a;">▰ personal</span>  <span style="color:#583090;">━━</span>
+<span style="color:#1a8a6a;">▰</span> <span style="color:#6a6e82;">5h</span>   <span style="color:#1a8a6a;">▲▼▲▼</span><span style="color:#40465a;">△▽△▽</span>   <span style="color:#1a8a6a;">27%</span>  <span style="color:#6a6e82;">(3h 59m)</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">▰</span> <span style="color:#6a6e82;">7d</span>   <span style="color:#a0a4b8;">▲▼▲▼</span><span style="color:#40465a;">△▽△▽</span>   <span style="color:#a0a4b8;">52%</span>  <span style="color:#6a6e82;">(4d 18h)</span>   <span style="color:#6a6e82;">━━━━━━━━━━━━</span>   <span style="color:#a0a4b8;">~18 t/s</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#d0b850;">$0.42</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">12m</span>
+<span style="color:#1e8898;">▰</span> <span style="color:#6a6e82;">ctx</span>  <span style="color:#1e8898;">▲▼▲▼▲</span><span style="color:#40465a;">△▽△</span>   <span style="color:#1e8898;">64%</span>  <span style="color:#6a6e82;">(114k / 200k)</span>   <span style="color:#1e8898;">in</span>  <span style="color:#1e8898;">c⧈</span> <span style="color:#1e8898;">120k</span>  <span style="color:#1e8898;">r□</span> <span style="color:#1e8898;">10k</span>  <span style="color:#6a6e82;">//</span>  <span style="color:#d0b850;">out</span>  <span style="color:#d0b850;">c⧈</span> <span style="color:#d0b850;">84k</span>  <span style="color:#d0b850;">w□</span> <span style="color:#d0b850;">190k</span>   <span style="color:#6a6e82;">━━━━━━</span>   <span style="color:#1a8a6a;">◇ 5</span>
+<span style="color:#1c3d7a;">◈</span> <span style="color:#1c3d7a;">feat/issue-4-statusline-v2</span>   <span style="color:#d0b850;">↑2</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1a8a6a;">+34</span> <span style="color:#c04050;">-12</span>   <span style="color:#6a6e82;">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>   <span style="color:#1e8898;">◈ 3</span>
+    </div>
+  </div>
+</div>
+
+<div class="mockup" style="margin-top: 1.5rem;">
+  <div class="mockup-header">Chrysaki V2 — Handoff State (ctx >= 100k)</div>
+  <div class="mockup-body" style="font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 12.5px; line-height: 2.2; background: #1a1b26; color: #a9b1d6; padding: 1.5rem 2rem; border-radius: 8px; overflow-x: auto;">
+    <div style="white-space: pre; min-width: 155ch;">
+<span style="color:#1a8a6a;">━━</span>  <span style="color:#1c3d7a;">⬢</span> <span style="background: linear-gradient(90deg, #1a8a6a, #1c3d7a, #583090); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Claude Opus 4.6</span>  <span style="color:#1a8a6a;">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>  <span style="color:#583090;">Claude/statusline</span>   <span style="color:#6a6e82;">v2.1.79</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1a8a6a;">▰ personal</span>  <span style="color:#583090;">━━</span>
+<span style="color:#c04050;">◆</span> <span style="color:#6a6e82;">5h</span>   <span style="color:#c04050;">▲▼▲▼▲▼▲</span><span style="color:#40465a;">△</span>   <span style="color:#c04050;">82%</span>  <span style="color:#6a6e82;">(0h 44m)</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#b8a038;">▱</span> <span style="color:#6a6e82;">7d</span>   <span style="color:#b8a038;">▲▼▲▼▲</span><span style="color:#40465a;">△▽△</span>   <span style="color:#b8a038;">61%</span>  <span style="color:#6a6e82;">(3d 2h)</span>   <span style="color:#6a6e82;">━━━━━━━━━━━━━</span>   <span style="color:#a0a4b8;">~22 t/s</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#d0b850;">$3.14</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">1hr 12m</span>
+<span style="color:#c04050;">◆</span> <span style="color:#6a6e82;">ctx</span>  <span style="color:#c04050;">▲▼▲▼▲▼▲</span><span style="color:#40465a;">△</span>   <span style="color:#c04050;">84%</span>  <span style="color:#6a6e82;">(168k / 200k)</span>   <span style="color:#1e8898;">in</span>  <span style="color:#1e8898;">c⧈</span> <span style="color:#1e8898;">140k</span>  <span style="color:#1e8898;">r□</span> <span style="color:#1e8898;">12k</span>  <span style="color:#6a6e82;">//</span>  <span style="color:#d0b850;">out</span>  <span style="color:#d0b850;">c⧈</span> <span style="color:#d0b850;">8k</span>  <span style="color:#d0b850;">w□</span> <span style="color:#d0b850;">16k</span>   <span style="color:#6a6e82;">━━</span> <span style="color:#c04050;">⬢ → handoff</span> <span style="color:#6a6e82;">━━</span>
+<span style="color:#1c3d7a;">◈</span> <span style="color:#1c3d7a;">feat/issue-4-statusline-v2</span>   <span style="color:#d0b850;">↑5</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1a8a6a;">+187</span> <span style="color:#c04050;">-43</span>   <span style="color:#6a6e82;">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>   <span style="color:#1e8898;">◈ 8</span>
+    </div>
+  </div>
+</div>
+
+<div class="mockup" style="margin-top: 1.5rem;">
+  <div class="mockup-header">Chrysaki V2 — Worktree Active</div>
+  <div class="mockup-body" style="font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 12.5px; line-height: 2.2; background: #1a1b26; color: #a9b1d6; padding: 1.5rem 2rem; border-radius: 8px; overflow-x: auto;">
+    <div style="white-space: pre; min-width: 155ch;">
+<span style="color:#1a8a6a;">━━</span>  <span style="color:#1c3d7a;">⬢</span> <span style="background: linear-gradient(90deg, #1a8a6a, #1c3d7a, #583090); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Claude Opus 4.6</span>  <span style="color:#1a8a6a;">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>  <span style="color:#583090;">Claude/statusline</span>   <span style="color:#6a6e82;">v2.1.79</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1a8a6a;">▰ personal</span>  <span style="color:#583090;">━━</span>
+<span style="color:#1a8a6a;">▰</span> <span style="color:#6a6e82;">5h</span>   <span style="color:#1a8a6a;">▲▼▲▼</span><span style="color:#40465a;">△▽△▽</span>   <span style="color:#1a8a6a;">27%</span>  <span style="color:#6a6e82;">(3h 59m)</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">▰</span> <span style="color:#6a6e82;">7d</span>   <span style="color:#a0a4b8;">▲▼▲▼</span><span style="color:#40465a;">△▽△▽</span>   <span style="color:#a0a4b8;">52%</span>  <span style="color:#6a6e82;">(4d 18h)</span>   <span style="color:#6a6e82;">━━━━━━━━━━━━</span>   <span style="color:#a0a4b8;">~18 t/s</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#d0b850;">$0.42</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">12m</span>
+<span style="color:#1e8898;">▰</span> <span style="color:#6a6e82;">ctx</span>  <span style="color:#1e8898;">▲▼▲▼▲</span><span style="color:#40465a;">△▽△</span>   <span style="color:#1e8898;">64%</span>  <span style="color:#6a6e82;">(114k / 200k)</span>   <span style="color:#1e8898;">in</span>  <span style="color:#1e8898;">c⧈</span> <span style="color:#1e8898;">120k</span>  <span style="color:#1e8898;">r□</span> <span style="color:#1e8898;">10k</span>  <span style="color:#6a6e82;">//</span>  <span style="color:#d0b850;">out</span>  <span style="color:#d0b850;">c⧈</span> <span style="color:#d0b850;">84k</span>  <span style="color:#d0b850;">w□</span> <span style="color:#d0b850;">190k</span>   <span style="color:#6a6e82;">━━━━━━</span>   <span style="color:#1a8a6a;">◇ 5</span>
+<span style="color:#1c3d7a;">◈</span> <span style="color:#1c3d7a;">feat/issue-4-statusline-v2</span>   <span style="color:#d0b850;">↑2</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">wt:review-fix</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1a8a6a;">+34</span> <span style="color:#c04050;">-12</span>   <span style="color:#6a6e82;">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>   <span style="color:#1e8898;">◈ 3</span>
+    </div>
+  </div>
+</div>
+
+<h3 style="margin-top: 2rem;">Field Mapping</h3>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+  <div style="background: rgba(30,136,152,0.06); border: 1px solid rgba(30,136,152,0.15); border-radius: 8px; padding: 1rem;">
+    <h4 style="color: #1e8898; margin: 0 0 0.5rem;">in (teal)</h4>
+    <div style="font-size: 0.85em; color: #a9b1d6; line-height: 1.8; font-family: monospace;">
+      <code>c⧈</code> = <code>cache_read_input_tokens</code><br>
+      <span style="color:#6a6e82;">Tokens reused from previous turn's cache</span><br><br>
+      <code>r□</code> = <code>input_tokens</code><br>
+      <span style="color:#6a6e82;">Fresh input tokens (not from cache)</span>
+    </div>
+  </div>
+  <div style="background: rgba(208,184,80,0.06); border: 1px solid rgba(208,184,80,0.15); border-radius: 8px; padding: 1rem;">
+    <h4 style="color: #d0b850; margin: 0 0 0.5rem;">out (blonde)</h4>
+    <div style="font-size: 0.85em; color: #a9b1d6; line-height: 1.8; font-family: monospace;">
+      <code>c⧈</code> = <code>cache_creation_input_tokens</code><br>
+      <span style="color:#6a6e82;">Tokens newly written to cache for reuse</span><br><br>
+      <code>w□</code> = <code>output_tokens</code><br>
+      <span style="color:#6a6e82;">Model-generated output tokens</span>
+    </div>
+  </div>
+</div>

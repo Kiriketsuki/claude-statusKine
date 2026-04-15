@@ -1,0 +1,58 @@
+<h2>What is Powerline?</h2>
+<p class="subtitle">A rendering style comparison. Chrysaki (what you have) vs Powerline (what sirmalloc uses).</p>
+
+<h3>Your Current Style: Chrysaki Geometric</h3>
+<p style="color: #6a6e82; font-size: 0.9em;">Transparent background, colored foreground text, geometric shapes, gradient bridges filling empty space.</p>
+
+<div class="mockup">
+  <div class="mockup-header">Chrysaki — transparent bg, geometric glyphs, bridge fills</div>
+  <div class="mockup-body" style="font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 13px; line-height: 2; background: #1a1b26; color: #a9b1d6; padding: 1.5rem 2rem; border-radius: 8px; overflow-x: auto;">
+    <div style="white-space: pre; min-width: 120ch;"><span style="color:#1a8a6a;">━━</span>  <span style="color:#1c3d7a;">⬢</span> <span style="background: linear-gradient(90deg, #1a8a6a, #1c3d7a, #583090); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Claude Opus 4.6</span>  <span style="color:#1a8a6a;">━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>  <span style="color:#583090;">Claude/statusline</span>   <span style="color:#6a6e82;">v2.1.79</span>  <span style="color:#583090;">━━</span>
+<span style="color:#1a8a6a;">▰</span> <span style="color:#6a6e82;">5h</span>   <span style="color:#1a8a6a;">▲▼▲▼</span><span style="color:#40465a;">△▽△▽</span>   <span style="color:#1a8a6a;">27%</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">▰</span> <span style="color:#6a6e82;">7d</span>   <span style="color:#a0a4b8;">▲▼▲▼</span><span style="color:#40465a;">△▽△▽</span>   <span style="color:#a0a4b8;">52%</span>   <span style="color:#6a6e82;">━━━━━━━━━━━━━</span>   <span style="color:#a0a4b8;">~18 t/s</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#d0b850;">$0.42</span></div>
+  </div>
+</div>
+
+<h3 style="margin-top: 2rem;">Powerline Style</h3>
+<p style="color: #6a6e82; font-size: 0.9em;">Colored <strong>backgrounds</strong> on each segment, connected by arrow-shaped separators (<span style="font-size: 1.2em;"></span> U+E0B0). Each segment's background color bleeds into the next separator. Dense, no empty space.</p>
+
+<div class="mockup">
+  <div class="mockup-header">Powerline — colored bg segments, arrow separators, no bridges</div>
+  <div class="mockup-body" style="font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 13px; line-height: 2; background: #1a1b26; color: #a9b1d6; padding: 1.5rem 2rem; border-radius: 8px; overflow-x: auto;">
+    <div style="white-space: pre; min-width: 120ch;"><span style="background:#1c3d7a; color:#e0e0e0;"> ⬢ Claude Opus 4.6 </span><span style="color:#1c3d7a; background:#1a8a6a;"></span><span style="background:#1a8a6a; color:#e0e0e0;"> Claude/statusline </span><span style="color:#1a8a6a; background:#583090;"></span><span style="background:#583090; color:#e0e0e0;"> v2.1.79 </span><span style="color:#583090;"></span>
+<span style="background:#1a8a6a; color:#e0e0e0;"> 5h 27% </span><span style="color:#1a8a6a; background:#40465a;"></span><span style="background:#40465a; color:#a0a4b8;"> 7d 52% </span><span style="color:#40465a; background:#3a3040;"></span><span style="background:#3a3040; color:#a0a4b8;"> ~18 t/s </span><span style="color:#3a3040; background:#4a4030;"></span><span style="background:#4a4030; color:#d0b850;"> $0.42 </span><span style="color:#4a4030;"></span></div>
+  </div>
+</div>
+
+<h3 style="margin-top: 2rem;">Side-by-Side Comparison</h3>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+  <div style="background: rgba(26,138,106,0.06); border: 1px solid rgba(26,138,106,0.15); border-radius: 8px; padding: 1rem;">
+    <h4 style="color: #1a8a6a; margin: 0 0 0.5rem;">Chrysaki Geometric</h4>
+    <div style="font-size: 0.85em; color: #a9b1d6; line-height: 1.8;">
+      Transparent background<br>
+      Colored foreground text only<br>
+      Geometric shapes (▲▼⬢◆◇▰)<br>
+      Bridge fills (<code>━━━</code>) create breathing room<br>
+      Gradient animation across bridges<br>
+      Muted, airy aesthetic<br>
+      <strong>Your current design language</strong>
+    </div>
+  </div>
+  <div style="background: rgba(88,48,144,0.06); border: 1px solid rgba(88,48,144,0.15); border-radius: 8px; padding: 1rem;">
+    <h4 style="color: #583090; margin: 0 0 0.5rem;">Powerline</h4>
+    <div style="font-size: 0.85em; color: #a9b1d6; line-height: 1.8;">
+      Colored <strong>backgrounds</strong> per segment<br>
+      White/light foreground text<br>
+      Arrow separators ( U+E0B0)<br>
+      No empty space — segments pack tight<br>
+      Color cycling across segments<br>
+      Dense, ribbon-like aesthetic<br>
+      <strong>Used by tmux, vim statuslines, starship</strong>
+    </div>
+  </div>
+</div>
+
+<h3 style="margin-top: 2rem;">The Question</h3>
+<p style="color: #a9b1d6; font-size: 0.9em;">
+  Powerline is a fundamentally different rendering approach — it replaces bridges with packed colored segments. sirmalloc's ccstatusline uses this style exclusively. Adding it to Chrysaki would mean maintaining <strong>two complete renderers</strong> behind an env var toggle.<br><br>
+  It's a significant chunk of work. The question is whether to include it in this V2 release, stub it for later, or skip it entirely and keep Chrysaki as the sole style.
+</p>

@@ -1,0 +1,90 @@
+<h2>4-Line Layout Options</h2>
+<p class="subtitle">Three approaches to distributing content across 4 lines. Nested square glyphs for cache. Wider terminal assumed (~160 cols). All with improved spacing.</p>
+
+<!-- Option A -->
+<div class="option" data-choice="a" onclick="toggleSelect(this)" style="padding: 0;">
+  <div style="display: flex; align-items: flex-start; padding: 1rem;">
+    <div class="letter">A</div>
+    <div class="content" style="flex: 1;">
+      <h3>Line 4 = New Metrics</h3>
+      <p>Keep existing 3 lines mostly intact. Add a 4th line below for the new widgets. Lines 2-3 stay clean, new stuff gets its own row.</p>
+    </div>
+  </div>
+  <div style="font-family: 'JetBrains Mono', 'Fira Code', monospace; background: #1a1b26; color: #a9b1d6; padding: 1.5rem; border-radius: 8px; font-size: 12.5px; line-height: 2; margin: 0 1rem 1rem 1rem; overflow-x: auto;">
+    <div style="white-space: pre; min-width: 140ch;">
+<span style="color:#6a6e82;">L1  Brand</span>    <span style="color:#1a8a6a;">━━</span>  <span style="color:#1c3d7a;">⬢</span> <span style="background: linear-gradient(90deg, #1a8a6a, #1c3d7a, #583090); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Claude Opus 4.6</span>  <span style="color:#1a8a6a;">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>  <span style="color:#583090;">Claude/statusline</span>  <span style="color:#6a6e82;">◆</span>  <span style="color:#1c3d7a;">feat/issue-4</span> <span style="color:#d0b850;">↑2</span>  <span style="color:#583090;">━━</span>
+<span style="color:#6a6e82;">L2  Usage</span>    <span style="color:#1a8a6a;">▰</span> <span style="color:#6a6e82;">5h</span>   <span style="color:#1a8a6a;">▲▼▲▼</span><span style="color:#40465a;">△▽△▽</span>  <span style="color:#1a8a6a;"> 27%</span>  <span style="color:#6a6e82;">(3h 59m)</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">▰</span> <span style="color:#6a6e82;">7d</span>   <span style="color:#a0a4b8;">▲▼▲▼</span><span style="color:#40465a;">△▽△▽</span>  <span style="color:#a0a4b8;"> 52%</span>  <span style="color:#6a6e82;">(4d 18h)</span>   <span style="color:#6a6e82;">──────────────────</span>   <span style="color:#6a6e82;">v2.1.79</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1e8898;">◈ 3</span>
+<span style="color:#6a6e82;">L3  Context</span>  <span style="color:#1e8898;">▰</span> <span style="color:#6a6e82;">ctx</span>  <span style="color:#1e8898;">▲▼▲▼▲</span><span style="color:#40465a;">△▽△</span>  <span style="color:#1e8898;"> 64%</span>  <span style="color:#6a6e82;">(114k / 200k)</span>   <span style="color:#6a6e82;">──────────────────────────────────────────</span>   <span style="color:#1a8a6a;">◇ 5</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1a8a6a;">▰ personal</span>
+<span style="color:#6a6e82;">L4  Session</span>  <span style="color:#d0b850;">▰</span> <span style="color:#6a6e82;">$</span>   <span style="color:#d0b850;">$0.42</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">~18 t/s</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1e8898;">C</span><span style="color:#1e8898;">⧈</span> <span style="color:#1e8898;">80k</span>  <span style="color:#d0b850;">W</span><span style="color:#d0b850;">□</span> <span style="color:#d0b850;">12k</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1a8a6a;">+34</span> <span style="color:#c04050;">-12</span>   <span style="color:#6a6e82;">─────────────</span>   <span style="color:#a0a4b8;">12m</span>
+    </div>
+  </div>
+</div>
+
+<!-- Option B -->
+<div class="option" data-choice="b" onclick="toggleSelect(this)" style="padding: 0; margin-top: 1.5rem;">
+  <div style="display: flex; align-items: flex-start; padding: 1rem;">
+    <div class="letter">B</div>
+    <div class="content" style="flex: 1;">
+      <h3>Brand Splits Into 2 Lines</h3>
+      <p>Line 1 = pure model identity + gradient. Line 2 = workspace context (dir, branch, git state). Gives brand more presence and git info more room.</p>
+    </div>
+  </div>
+  <div style="font-family: 'JetBrains Mono', 'Fira Code', monospace; background: #1a1b26; color: #a9b1d6; padding: 1.5rem; border-radius: 8px; font-size: 12.5px; line-height: 2; margin: 0 1rem 1rem 1rem; overflow-x: auto;">
+    <div style="white-space: pre; min-width: 140ch;">
+<span style="color:#6a6e82;">L1  Model</span>    <span style="color:#1a8a6a;">━━</span>  <span style="color:#1c3d7a;">⬢</span> <span style="background: linear-gradient(90deg, #1a8a6a, #1c3d7a, #583090); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Claude Opus 4.6</span>  <span style="color:#1a8a6a;">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>  <span style="color:#583090;">━━</span>
+<span style="color:#6a6e82;">L2  Work</span>     <span style="color:#583090;">Claude/statusline</span>   <span style="color:#6a6e82;">◆</span>   <span style="color:#1c3d7a;">feat/issue-4</span> <span style="color:#d0b850;">↑2</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1a8a6a;">+34</span> <span style="color:#c04050;">-12</span>   <span style="color:#6a6e82;">──────────────────────</span>   <span style="color:#d0b850;">$0.42</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">~18 t/s</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">12m</span>
+<span style="color:#6a6e82;">L3  Usage</span>    <span style="color:#1a8a6a;">▰</span> <span style="color:#6a6e82;">5h</span>   <span style="color:#1a8a6a;">▲▼▲▼</span><span style="color:#40465a;">△▽△▽</span>  <span style="color:#1a8a6a;"> 27%</span>  <span style="color:#6a6e82;">(3h 59m)</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">▰</span> <span style="color:#6a6e82;">7d</span>   <span style="color:#a0a4b8;">▲▼▲▼</span><span style="color:#40465a;">△▽△▽</span>  <span style="color:#a0a4b8;"> 52%</span>  <span style="color:#6a6e82;">(4d 18h)</span>   <span style="color:#6a6e82;">──────────────────</span>   <span style="color:#6a6e82;">v2.1.79</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1e8898;">◈ 3</span>
+<span style="color:#6a6e82;">L4  Context</span>  <span style="color:#1e8898;">▰</span> <span style="color:#6a6e82;">ctx</span>  <span style="color:#1e8898;">▲▼▲▼▲</span><span style="color:#40465a;">△▽△</span>  <span style="color:#1e8898;"> 64%</span>  <span style="color:#6a6e82;">(114k / 200k)</span>   <span style="color:#1e8898;">C</span><span style="color:#1e8898;">⧈</span> <span style="color:#1e8898;">80k</span>  <span style="color:#d0b850;">W</span><span style="color:#d0b850;">□</span> <span style="color:#d0b850;">12k</span>   <span style="color:#6a6e82;">──────────────</span>   <span style="color:#1a8a6a;">◇ 5</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1a8a6a;">▰ personal</span>
+    </div>
+  </div>
+</div>
+
+<!-- Option C -->
+<div class="option" data-choice="c" onclick="toggleSelect(this)" style="padding: 0; margin-top: 1.5rem;">
+  <div style="display: flex; align-items: flex-start; padding: 1rem;">
+    <div class="letter">C</div>
+    <div class="content" style="flex: 1;">
+      <h3>Dedicated Git Line</h3>
+      <p>Line 1 = brand. Line 2 = all git context (branch, worktree, changes, links). Lines 3-4 = metrics split into usage vs context+session. Git gets room to breathe.</p>
+    </div>
+  </div>
+  <div style="font-family: 'JetBrains Mono', 'Fira Code', monospace; background: #1a1b26; color: #a9b1d6; padding: 1.5rem; border-radius: 8px; font-size: 12.5px; line-height: 2; margin: 0 1rem 1rem 1rem; overflow-x: auto;">
+    <div style="white-space: pre; min-width: 140ch;">
+<span style="color:#6a6e82;">L1  Brand</span>    <span style="color:#1a8a6a;">━━</span>  <span style="color:#1c3d7a;">⬢</span> <span style="background: linear-gradient(90deg, #1a8a6a, #1c3d7a, #583090); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Claude Opus 4.6</span>  <span style="color:#1a8a6a;">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>  <span style="color:#583090;">Claude/statusline</span>  <span style="color:#6a6e82;">◆</span>  <span style="color:#d0b850;">$0.42</span>  <span style="color:#6a6e82;">│</span>  <span style="color:#a0a4b8;">12m</span>  <span style="color:#583090;">━━</span>
+<span style="color:#6a6e82;">L2  Git</span>      <span style="color:#1c3d7a;">◈</span> <span style="color:#1c3d7a;">feat/issue-4</span>   <span style="color:#d0b850;">↑2</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1a8a6a;">+34</span> <span style="color:#c04050;">-12</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">~18 t/s</span>   <span style="color:#6a6e82;">────────────────────────────────────</span>   <span style="color:#6a6e82;">v2.1.79</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1e8898;">◈ 3</span>
+<span style="color:#6a6e82;">L3  Usage</span>    <span style="color:#1a8a6a;">▰</span> <span style="color:#6a6e82;">5h</span>   <span style="color:#1a8a6a;">▲▼▲▼</span><span style="color:#40465a;">△▽△▽</span>  <span style="color:#1a8a6a;"> 27%</span>  <span style="color:#6a6e82;">(3h 59m)</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">▰</span> <span style="color:#6a6e82;">7d</span>   <span style="color:#a0a4b8;">▲▼▲▼</span><span style="color:#40465a;">△▽△▽</span>  <span style="color:#a0a4b8;"> 52%</span>  <span style="color:#6a6e82;">(4d 18h)</span>   <span style="color:#6a6e82;">──────────────────────────────────────────</span>
+<span style="color:#6a6e82;">L4  Context</span>  <span style="color:#1e8898;">▰</span> <span style="color:#6a6e82;">ctx</span>  <span style="color:#1e8898;">▲▼▲▼▲</span><span style="color:#40465a;">△▽△</span>  <span style="color:#1e8898;"> 64%</span>  <span style="color:#6a6e82;">(114k / 200k)</span>   <span style="color:#1e8898;">C</span><span style="color:#1e8898;">⧈</span> <span style="color:#1e8898;">80k</span>  <span style="color:#d0b850;">W</span><span style="color:#d0b850;">□</span> <span style="color:#d0b850;">12k</span>   <span style="color:#6a6e82;">──────────────────</span>   <span style="color:#1a8a6a;">◇ 5</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1a8a6a;">▰ personal</span>
+    </div>
+  </div>
+</div>
+
+<h3 style="margin-top: 2rem;">Comparison</h3>
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; font-size: 0.85em;">
+  <div style="background: rgba(26,138,106,0.06); border: 1px solid rgba(26,138,106,0.15); border-radius: 8px; padding: 1rem;">
+    <h4 style="color: #1a8a6a; margin: 0 0 0.5rem;">A: New Metrics Line</h4>
+    <div style="color: #a9b1d6; line-height: 1.6;">
+      + Least disruption to existing layout<br>
+      + Line 4 is purely additive<br>
+      - Line 1 still feels sparse<br>
+      - New line is a grab bag of unrelated metrics
+    </div>
+  </div>
+  <div style="background: rgba(88,48,144,0.06); border: 1px solid rgba(88,48,144,0.15); border-radius: 8px; padding: 1rem;">
+    <h4 style="color: #583090; margin: 0 0 0.5rem;">B: Brand Splits</h4>
+    <div style="color: #a9b1d6; line-height: 1.6;">
+      + Line 1 becomes a dramatic gradient banner<br>
+      + Workspace line groups dir + branch + session naturally<br>
+      - Session cost/speed/clock mixed with git feels odd<br>
+      - Brand takes 2 lines (50% of space) for little info
+    </div>
+  </div>
+  <div style="background: rgba(30,136,152,0.06); border: 1px solid rgba(30,136,152,0.15); border-radius: 8px; padding: 1rem;">
+    <h4 style="color: #1e8898; margin: 0 0 0.5rem;">C: Dedicated Git Line</h4>
+    <div style="color: #a9b1d6; line-height: 1.6;">
+      + Clean separation: brand / git / usage / context<br>
+      + Git info has room for worktree, changes, links<br>
+      + Cost + clock on Line 1 = session identity<br>
+      - Usage line (L3) right side feels empty
+    </div>
+  </div>
+</div>

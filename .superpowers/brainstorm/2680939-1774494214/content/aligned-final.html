@@ -1,0 +1,56 @@
+<h2>Chrysaki V2 — Aligned & Padded</h2>
+<p class="subtitle">Consistent spacing rules, vertical alignment across all 4 lines, account detection fix.</p>
+
+<h3>Spacing Rules</h3>
+<div style="font-size: 0.85em; color: #a9b1d6; line-height: 1.8; background: rgba(106,110,130,0.06); border: 1px solid rgba(106,110,130,0.15); border-radius: 8px; padding: 1rem; font-family: monospace;">
+  <strong>3-space gap</strong> between all adjacent widgets: <code>&nbsp;&nbsp;&nbsp;</code><br>
+  <strong>Divider</strong> = <code>&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;</code> (3 + 1 + 3 = 7 chars visible)<br>
+  <strong>Bridge padding</strong> = <code>&nbsp;&nbsp;&nbsp;━━━&nbsp;&nbsp;&nbsp;</code> (3 chars padding each side of bridge)<br>
+  <strong>Percentage</strong> = right-aligned, padded to 3 chars: <code>&nbsp;5%</code>, <code>27%</code>, <code>82%</code><br>
+  <strong>Token counts</strong> = right-aligned within group: <code>&nbsp;10k</code>, <code>120k</code><br>
+  <strong>Section markers</strong> = 1 char wide, always followed by 1 space<br>
+  <strong>L1/L4 prefix/suffix</strong> = <code>━━&nbsp;&nbsp;</code> (2 dash + 2 space) / <code>&nbsp;&nbsp;━━</code>
+</div>
+
+<h3 style="margin-top: 1.5rem;">Aligned Layout (160 cols)</h3>
+
+<div class="mockup">
+  <div class="mockup-header">Normal State — note vertical alignment of │ dividers and bridge starts</div>
+  <div class="mockup-body" style="font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 12.5px; line-height: 2.2; background: #1a1b26; color: #a9b1d6; padding: 1.5rem 2rem; border-radius: 8px; overflow-x: auto;">
+    <div style="white-space: pre; min-width: 155ch;">
+<span style="color:#1a8a6a;">━━</span>  <span style="color:#1c3d7a;">⬢</span> <span style="background: linear-gradient(90deg, #1a8a6a, #1c3d7a, #583090); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Claude Opus 4.6</span>   <span style="color:#1a8a6a;">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>   <span style="color:#583090;">Claude/statusline</span>   <span style="color:#6a6e82;">v2.1.84</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1a8a6a;">▰ personal</span>  <span style="color:#583090;">━━</span>
+<span style="color:#1a8a6a;">▰</span> <span style="color:#6a6e82;">5h</span>   <span style="color:#1a8a6a;">▲▼▲▼</span><span style="color:#40465a;">△▽△▽</span>   <span style="color:#1a8a6a;">27%</span>   <span style="color:#6a6e82;">(3h 59m)</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">▰</span> <span style="color:#6a6e82;">7d</span>   <span style="color:#a0a4b8;">▲▼▲▼</span><span style="color:#40465a;">△▽△▽</span>   <span style="color:#a0a4b8;">52%</span>   <span style="color:#6a6e82;">(4d 18h)</span>   <span style="color:#6a6e82;">━━━━━━━━━</span>   <span style="color:#a0a4b8;">~18 t/s</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#d0b850;">$0.42</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">12m</span>
+<span style="color:#1e8898;">▰</span> <span style="color:#6a6e82;">ctx</span>  <span style="color:#1e8898;">▲▼▲▼▲</span><span style="color:#40465a;">△▽△</span>   <span style="color:#1e8898;">64%</span>   <span style="color:#6a6e82;">(114k / 200k)</span>   <span style="color:#1e8898;">in</span>  <span style="color:#1e8898;">c⧈</span> <span style="color:#1e8898;">120k</span>  <span style="color:#1e8898;">r□</span>  <span style="color:#1e8898;">10k</span>  <span style="color:#6a6e82;">//</span>  <span style="color:#d0b850;">out</span>  <span style="color:#d0b850;">c⧈</span>  <span style="color:#d0b850;">84k</span>  <span style="color:#d0b850;">w□</span> <span style="color:#d0b850;">190k</span>   <span style="color:#6a6e82;">━━━</span>   <span style="color:#1a8a6a;">◇ 5</span>
+<span style="color:#1c3d7a;">◈</span> <span style="color:#1c3d7a;">feat/issue-4-statusline-v2</span>   <span style="color:#d0b850;">↑2</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1a8a6a;">+34</span> <span style="color:#c04050;">-12</span>   <span style="color:#6a6e82;">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>   <span style="color:#1e8898;">◈ 3</span>
+    </div>
+  </div>
+</div>
+
+<div class="mockup" style="margin-top: 1rem;">
+  <div class="mockup-header">Aurrigo Account — note different email color + account-aware usage</div>
+  <div class="mockup-body" style="font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 12.5px; line-height: 2.2; background: #1a1b26; color: #a9b1d6; padding: 1.5rem 2rem; border-radius: 8px; overflow-x: auto;">
+    <div style="white-space: pre; min-width: 155ch;">
+<span style="color:#1a8a6a;">━━</span>  <span style="color:#1c3d7a;">⬢</span> <span style="background: linear-gradient(90deg, #1a8a6a, #1c3d7a, #583090); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Claude Opus 4.6</span>   <span style="color:#1a8a6a;">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>   <span style="color:#583090;">Aurrigo/AutoConnect</span>   <span style="color:#6a6e82;">v2.1.84</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#d0a028;">▰ aurrigo</span>  <span style="color:#583090;">━━</span>
+<span style="color:#c04050;">◆</span> <span style="color:#6a6e82;">5h</span>   <span style="color:#c04050;">▲▼▲▼▲▼▲</span><span style="color:#40465a;">△</span>   <span style="color:#c04050;">90%</span>   <span style="color:#6a6e82;">(1h 20m)</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">▰</span> <span style="color:#6a6e82;">7d</span>   <span style="color:#a0a4b8;">▲</span><span style="color:#40465a;">▽△▽△▽△▽</span>    <span style="color:#a0a4b8;">5%</span>   <span style="color:#6a6e82;">(6d 21h)</span>   <span style="color:#6a6e82;">━━━━━━━━━</span>   <span style="color:#a0a4b8;">~14 t/s</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#d0b850;">$1.23</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#a0a4b8;">32m</span>
+<span style="color:#1e8898;">▰</span> <span style="color:#6a6e82;">ctx</span>  <span style="color:#1e8898;">▲</span><span style="color:#40465a;">▽△▽△▽△▽</span>    <span style="color:#1e8898;">8%</span>   <span style="color:#6a6e82;"> (80k / 1000k)</span>   <span style="color:#1e8898;">in</span>  <span style="color:#1e8898;">c⧈</span>  <span style="color:#1e8898;">60k</span>  <span style="color:#1e8898;">r□</span>   <span style="color:#1e8898;">4k</span>  <span style="color:#6a6e82;">//</span>  <span style="color:#d0b850;">out</span>  <span style="color:#d0b850;">c⧈</span>  <span style="color:#d0b850;">12k</span>  <span style="color:#d0b850;">w□</span>  <span style="color:#d0b850;">16k</span>   <span style="color:#6a6e82;">━━━━━</span>   <span style="color:#1a8a6a;">◇ 2</span>
+<span style="color:#1c3d7a;">◈</span> <span style="color:#1c3d7a;">saga/9-component-ecosystem</span>   <span style="color:#d0b850;">↑0</span>   <span style="color:#6a6e82;">│</span>   <span style="color:#1a8a6a;">+892</span> <span style="color:#c04050;">-341</span>   <span style="color:#6a6e82;">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>   <span style="color:#1e8898;">◈ 12</span>
+    </div>
+  </div>
+</div>
+
+<h3 style="margin-top: 2rem;">Account Detection Fix</h3>
+<div style="background: rgba(192,64,80,0.08); border: 1px solid rgba(192,64,80,0.2); border-radius: 8px; padding: 1rem; font-size: 0.85em; color: #a9b1d6; line-height: 1.8;">
+  <strong style="color: #c04050;">Bug:</strong> Current account detection uses workspace path (<code>*/workdev/Aurrigo*</code> → Aurrigo). If you switch accounts mid-session or use personal account in an Aurrigo workspace, usage cache shows wrong account's data.<br><br>
+  <strong style="color: #1a8a6a;">Fix:</strong> Detect account from the status JSON itself. Claude Code provides <code>.session</code> or account info in the status payload. Alternatively, read <code>$CLAUDE_CONFIG_DIR</code> if set, or check the active credentials file identity. The cache file key should be derived from the <strong>actual authenticated account</strong>, not the workspace path.<br><br>
+  <strong>Impact:</strong> Affects <code>fetch-usage.sh</code> (which account's API to poll), <code>statusline-command.sh</code> (which cache file to read), and the email display on L1.
+</div>
+
+<h3 style="margin-top: 2rem;">Alignment Strategy</h3>
+<div style="background: rgba(30,136,152,0.06); border: 1px solid rgba(30,136,152,0.15); border-radius: 8px; padding: 1rem; font-size: 0.85em; color: #a9b1d6; line-height: 1.8;">
+  <strong>Column alignment across L2/L3:</strong><br>
+  - L2 and L3 both start with <code>▰ XXX  [8-bar]  XX%</code> — these form a natural alignment column<br>
+  - Use <code>%3d%%</code> format for percentages (right-justified, 3 chars) so <code>&nbsp;5%</code> and <code>90%</code> align<br>
+  - Token values in L3 right-justified within each pair: <code>c⧈ 120k</code> / <code>c⧈ &nbsp;60k</code><br>
+  - Bridge starts at the same column on L2/L3/L4 when possible (flex distributes remaining space)<br><br>
+  <strong>Replaces</strong> the current <code>first_w</code> / <code>l2_5h_pad</code> hack with a general max-width-per-column pass across all metric lines (L2, L3, L4).
+</div>
